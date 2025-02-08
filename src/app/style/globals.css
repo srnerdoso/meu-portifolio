@@ -23,6 +23,7 @@ body {
 
 main {
   color: var(--mainTextColor);
+  font-family: var(--fontFamily);
 }
 
 a {
