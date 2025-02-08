@@ -37,10 +37,6 @@ footer {
   background: var(--footerBackground);
 }
 
-.font-mono {
-  font-family: var(--fontMono);
-}
-
 .pointer-light {
   color: var(--pointerLightColor);
 }
