@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="font-mono">
+    <main>
       <h1>Hello world</h1>
     </main>
   );
