@@ -11,6 +11,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        linkColor: "var(--linkColor)",
+        pointerLightColor: "var(--pointerLightColor)",
+        mainTextColor: "var(--mainTextColor)",
+        footerBackground: "var(--footerBackground)",
+      },
+      fontFamily: {
+        fontFamily: "var(--fontFamily)",
+        mono: "var(--fontMono)",
       },
     },
   },
