@@ -33,6 +33,10 @@ a:hover {
   text-decoration: underline;
 }
 
+strong {
+  font-weight: medium;
+}
+
 footer {
   background: var(--footerBackground);
 }
