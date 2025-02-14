@@ -8,6 +8,7 @@ export default function About({
 }: ParagraphProps) {
   return (
     <section id="about" className={className}>
+      <h2 className="sr-only">Sobre</h2>
       <Paragraph
         paragraphWords={paragraphWords}
         boldWords={boldWords}

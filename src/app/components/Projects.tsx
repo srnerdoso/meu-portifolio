@@ -33,6 +33,8 @@ export default function Projects({
 
   return (
     <section id={projectName} className="flex flex-row gap-7 font-medium">
+      <h2 className="sr-only">Projetos</h2>
+
       <ProjectLinkComponent
         projectChildren={
           <img

@@ -11,7 +11,7 @@ export default function Sections({ children }: ElementProps) {
           <>
             {child}
             {index !== children.length - 1 && (
-              <hr className="border-dotted opacity-25" />
+              <hr key={`hr-${index}`} className="border-dotted opacity-25" />
             )}
           </>
         );

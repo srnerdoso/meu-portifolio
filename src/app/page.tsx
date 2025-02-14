@@ -55,7 +55,18 @@ export default function Home() {
               keyWords={["NextJS", "LeafletJS", "OSRM"]}
               boldWords={["mapa", "municipal"]}
             />,
-            <Experience />,
+            <Experience
+              experienceHeader="2025 - Home-office"
+              experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
+              keyWords={["NextJS,", "API,", "hooks"]}
+              boldWords={[
+                "site",
+                "agendamentos",
+                "solução",
+                "intuitiva",
+                "escalável",
+              ]}
+            />,
           ]}
         />
       </main>

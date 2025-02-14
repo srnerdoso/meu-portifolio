@@ -5,7 +5,6 @@ export interface ParagraphProps extends Pick<ElementProps, "className"> {
   paragraphWords: string;
   keyWords: string[];
   boldWords: string[];
-  className?: string;
 }
 
 export default function Paragraph({
@@ -28,7 +27,7 @@ export default function Paragraph({
         ? (words[wordIndex] = (
             <span className="font-bold">{words[wordIndex]}</span>
           ))
-        : (words[wordIndex] = <strong>{words[wordIndex]}</strong>);
+        : (words[wordIndex] = <strong className="font-bold">{words[wordIndex]}</strong>);
     });
   };
   updateWords(boldWords, "span");

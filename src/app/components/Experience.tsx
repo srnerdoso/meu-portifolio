@@ -1,17 +1,28 @@
-export default function Experience() {
+import Paragraph, { ParagraphProps } from "./Paragraph";
+
+interface ExperienceProps
+  extends Pick<ParagraphProps, "keyWords" | "boldWords"> {
+  experienceHeader: string;
+  experienceDescription: string;
+}
+
+export default function Experience({
+  experienceHeader,
+  experienceDescription,
+  keyWords,
+  boldWords,
+}: ExperienceProps) {
   return (
     <section className="flex flex-row justify-between">
-      <h2 className="uppercase font-medium">2025 - Home-office</h2>
-      <p className="max-w-[411px]">
-        Estou desenvolvendo um site de agendamentos para diversos prestadores de
-        serviços, incluindo barbeiros, salões e outros segmentos. Este foi e
-        está sendo meu primeiro projeto com{" "}
-        <span className="font-medium">NextJS</span>, onde aprofundei
-        conhecimentos em hooks e requisições API, criando uma{" "}
-        <span className="font-medium">
-          solução intuitiva e escalável para o gerenciamento de reservas.
-        </span>
-      </p>
+      <h2 className="sr-only">Experiência</h2>
+      <div>
+        <h3 className="uppercase font-medium">{experienceHeader}</h3>
+        <Paragraph
+          paragraphWords={experienceDescription}
+          keyWords={keyWords}
+          boldWords={boldWords}
+        />
+      </div>
     </section>
   );
 }
