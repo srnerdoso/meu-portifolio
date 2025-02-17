@@ -22,7 +22,7 @@ export default function Paragraph({
 
       return acc;
     }, [] as number[]);
-    indexesKeyWords.forEach((wordIndex) => {
+    indexesKeyWords.forEach((wordIndex, index) => {
       wordType === "span"
         ? (words[wordIndex] = (
             <span className="font-bold">{words[wordIndex]}</span>
@@ -33,5 +33,5 @@ export default function Paragraph({
   updateWords(boldWords, "span");
   updateWords(keyWords, "strong");
 
-  return words.map((word) => <React.Fragment>{word} </React.Fragment>);
+  return words.map((word, index) => <React.Fragment key={`word-${index}`}>{word} </React.Fragment>);
 }

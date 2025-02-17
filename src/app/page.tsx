@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
@@ -24,12 +24,12 @@ export default function Home() {
           </div>
           <nav className="relative">
             <Ul
-              children={["Sobre", "Projetos", "Experiência"]}
+              elementChildren={["Sobre", "Projetos", "Experiência"]}
               className="opacity-50 uppercase flex flex-col gap-5"
             />
           </nav>
           <Anchor
-            children={[
+            elementChildren={[
               <AiFillGithub />,
               <AiFillLinkedin />,
               <AiFillInstagram />,
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
         <main className="ml-[537px]">
           <Sections
-            children={[
+            elementChildren={[
               <About
                 paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
                 keyWords={["NextJS,"]}

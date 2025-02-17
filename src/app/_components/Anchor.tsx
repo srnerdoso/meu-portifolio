@@ -5,15 +5,15 @@ interface AnchorProps extends ElementProps {
   href: string[];
 }
 
-export default function Anchor({ children, className, href }: AnchorProps) {
+export default function Anchor({ elementChildren, className, href }: AnchorProps) {
   return (
     <div
       id="social"
       className="relative top-8 w-full flex flex-row gap-5 justify-center"
     >
-      {children.map((component, index) => (
+      {elementChildren.map((component, index) => (
         <Link
-          key={`link-${index * 10}`}
+          key={`linkSocial-${index}`}
           href={href[index]}
           target="_blank"
           className={className}

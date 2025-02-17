@@ -24,8 +24,7 @@ export default function Ligth() {
       <div
         ref={lightRef}
         style={{
-          background:
-            "radial-gradient(circle, #8892B0 0%, #FFFFFF00 70%)",
+          background: "radial-gradient(circle, #8892B0 0%, #FFFFFF00 70%)",
         }}
         className="fixed w-[1000px] h-[1000px] roundend-full  opacity-5 pointer-events-none -translate-x-1/2 -translate-y-1/2"
       />

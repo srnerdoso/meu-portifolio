@@ -1,4 +1,4 @@
 export default interface ElementProps {
-  children: React.ReactNode[];
+  elementChildren: React.ReactNode[];
   className?: string;
 }

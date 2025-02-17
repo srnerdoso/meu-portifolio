@@ -9,13 +9,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        link: "var(--linkColor)",
-        pointerLightColor: "var(--pointerLightColor)",
-        mainTextColor: "var(--mainTextColor)",
-        footerBackground: "var(--footerBackground)",
+        Primary: "#0000008C",
+        Text: "#ffff",
+        zero: "#00000000",
       },
+      // colors: {
+      //   background: "var(--background)",
+      //   foreground: "var(--foreground)",
+      //   link: "var(--linkColor)",
+      //   pointerLightColor: "var(--pointerLightColor)",
+      //   mainTextColor: "var(--mainTextColor)",
+      //   footerBackground: "var(--footerBackground)",
+      // },
       fontFamily: {
         fontFamily: "var(--fontFamily)",
         mono: "var(--fontMono)",
