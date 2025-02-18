@@ -1,7 +1,7 @@
 import DivProps from "./interfaces/DivProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
 
-export interface ExperienceProps
+interface ExperienceProps
   extends Pick<ParagraphProps & DivProps, "keyWords" | "boldWords" | "ref"> {
   experienceHeader: string;
   experienceDescription: string;

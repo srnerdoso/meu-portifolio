@@ -1,39 +1,24 @@
-import Link from "next/link";
-import ElementProps from "./interfaces/ElementsProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
+import ProjectLinkComponent from "./ProjectLinkComponent";
 import DivProps from "./interfaces/DivProps";
 
-export interface ProjectProps extends Pick<ParagraphProps & DivProps, "boldWords" | "keyWords" | "ref"> {
+interface ProjectProps
+  extends Pick<ParagraphProps & DivProps, "boldWords" | "keyWords" | "ref"> {
   projectName: string;
-  projectUrl: string;
   projectTitle: string;
   projectDescription: string;
-}
-
-interface ProjectLinkComponentProps extends Pick<ElementProps, "className"> {
-  projectChildren: React.ReactNode;
+  projectUrl: string;
 }
 
 export default function Projects({
   projectName,
-  projectUrl,
   projectTitle,
   projectDescription,
+  projectUrl,
   keyWords,
   boldWords,
   ref,
 }: ProjectProps) {
-  const ProjectLinkComponent = ({
-    projectChildren,
-    className,
-  }: ProjectLinkComponentProps) => {
-    return (
-      <Link href={projectUrl} target="_blank" className={className}>
-        {projectChildren}
-      </Link>
-    );
-  };
-
   return (
     <section
       ref={ref}
@@ -41,7 +26,6 @@ export default function Projects({
       className="flex flex-row gap-7 font-medium"
     >
       <h2 className="sr-only">Projetos</h2>
-
       <ProjectLinkComponent
         projectChildren={
           <img
@@ -50,10 +34,12 @@ export default function Projects({
             className="w-44 border-[2px] border-link"
           />
         }
+        projectUrl={projectUrl}
       />
       <div id="projet-1" className="max-w-[407px]">
         <ProjectLinkComponent
           projectChildren={projectTitle}
+          projectUrl={projectUrl}
           className="font-medium"
         />
         <p>
