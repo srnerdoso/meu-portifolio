@@ -6,9 +6,9 @@ import About from "./_components/About";
 import Anchor from "./_components/Anchor";
 import Experience from "./_components/Experience";
 import Projects from "./_components/Projects";
-import Sections from "./_components/Sections";
 import Ul from "./_components/Ul";
 import Ligth from "./_components/Ligth";
+import Divider from "./_components/Divider";
 
 type SectionsRef = HTMLDivElement | null;
 
@@ -107,38 +107,42 @@ export default function Home() {
           <hr className="w-[1px] h-[92vh] bg-white border-none" />
         </div>
         <main className="ml-[537px]">
-          <Sections
-            elementChildren={[
-              <About
-                ref={aboutRef}
-                paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
-                keyWords={["NextJS,"]}
-                boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
-              />,
-              <Projects
-                ref={projectRef}
-                projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
-                projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
-                projectUrl="https://pnsdremedios-map.vercel.app/"
-                projectName="project1"
-                keyWords={["NextJS", "LeafletJS", "OSRM"]}
-                boldWords={["mapa", "municipal"]}
-              />,
-              <Experience
-                ref={experienceRef}
-                experienceHeader="2025 - Home-office"
-                experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
-                keyWords={["NextJS,", "API,", "hooks"]}
-                boldWords={[
-                  "site",
-                  "agendamentos",
-                  "solução",
-                  "intuitiva",
-                  "escalável",
-                ]}
-              />,
-            ]}
-          />
+          <div
+            id="container-sections"
+            className="flex flex-col gap-[100px] p-[93px] text-justify text-[0.83em]"
+          >
+            <About
+              ref={aboutRef}
+              paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
+              keyWords={["NextJS,"]}
+              boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
+            />
+            <Divider />
+            <Projects
+              ref={projectRef}
+              projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
+              projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
+              projectUrl="https://pnsdremedios-map.vercel.app/"
+              projectName="project1"
+              keyWords={["NextJS", "LeafletJS", "OSRM"]}
+              boldWords={["mapa", "municipal"]}
+            />
+            <Divider />
+            <Experience
+              ref={experienceRef}
+              experienceHeader="2025 - Home-office"
+              experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
+              keyWords={["NextJS,", "API,", "hooks"]}
+              boldWords={[
+                "site",
+                "agendamentos",
+                "solução",
+                "intuitiva",
+                "escalável",
+              ]}
+            />
+            <hr className="border-dotted opacity-25" />
+          </div>
         </main>
       </div>
     </>

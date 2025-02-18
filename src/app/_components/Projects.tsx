@@ -3,12 +3,13 @@ import ElementProps from "./interfaces/ElementsProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
 import DivProps from "./interfaces/DivProps";
 
-interface ProjectProps extends Pick<ParagraphProps, "boldWords" | "keyWords"> {
+export interface ProjectProps extends Pick<ParagraphProps & DivProps, "boldWords" | "keyWords" | "ref"> {
   projectName: string;
   projectUrl: string;
   projectTitle: string;
   projectDescription: string;
 }
+
 interface ProjectLinkComponentProps extends Pick<ElementProps, "className"> {
   projectChildren: React.ReactNode;
 }
@@ -21,7 +22,7 @@ export default function Projects({
   keyWords,
   boldWords,
   ref,
-}: ProjectProps & DivProps) {
+}: ProjectProps) {
   const ProjectLinkComponent = ({
     projectChildren,
     className,

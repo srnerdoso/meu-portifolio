@@ -1,8 +1,8 @@
 import DivProps from "./interfaces/DivProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
 
-interface ExperienceProps
-  extends Pick<ParagraphProps, "keyWords" | "boldWords"> {
+export interface ExperienceProps
+  extends Pick<ParagraphProps & DivProps, "keyWords" | "boldWords" | "ref"> {
   experienceHeader: string;
   experienceDescription: string;
 }
@@ -13,7 +13,7 @@ export default function Experience({
   keyWords,
   boldWords,
   ref,
-}: ExperienceProps & DivProps) {
+}: ExperienceProps) {
   return (
     <section ref={ref} id="experience" className="flex flex-row justify-between">
       <h2 className="sr-only">Experiência</h2>
