@@ -1,0 +1,33 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <g fill="white">
+    <script>
+      <![CDATA[
+        let svgNS = "http://www.w3.org/2000/svg";
+        let centerX = 250;
+        let centerY = 250;
+        let maxRadius = 200;
+        let numLayers = 20;
+        
+        for (let i = 0; i < numLayers; i++) {
+          let radius = (i / numLayers) * maxRadius;
+          let numPixels = Math.round(10 + i * 5);
+          
+          for (let j = 0; j < numPixels; j++) {
+            let angle = (j / numPixels) * 2 * Math.PI;
+            let x = centerX + radius * Math.cos(angle);
+            let y = centerY + radius * Math.sin(angle);
+            
+            let pixel = document.createElementNS(svgNS, "rect");
+            pixel.setAttribute("x", x);
+            pixel.setAttribute("y", y);
+            pixel.setAttribute("width", 4);
+            pixel.setAttribute("height", 4);
+            pixel.setAttribute("fill", "white");
+            pixel.setAttribute("transform", `translate(-2,-2)`);
+            document.querySelector("g").appendChild(pixel);
+          }
+        }
+      ]]>
+    </script>
+  </g>
+</svg>
