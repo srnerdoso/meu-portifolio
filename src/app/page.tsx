@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import About from "./_components/About";
 import Anchor from "./_components/Anchor";
@@ -10,7 +10,64 @@ import Sections from "./_components/Sections";
 import Ul from "./_components/Ul";
 import Ligth from "./_components/Ligth";
 
+type SectionsRef = HTMLDivElement | null;
+
 export default function Home() {
+  const aboutRef = useRef<SectionsRef>(null);
+  const projectRef = useRef<SectionsRef>(null);
+  const experienceRef = useRef<SectionsRef>(null);
+
+  const ulRef = useRef<HTMLLIElement[]>([]);
+
+  const [isVisible, setIsVisible] = useState<{
+    about: boolean;
+    projects: boolean;
+    experience: boolean;
+  }>({ about: false, projects: false, experience: false });
+
+  useEffect(() => {
+    const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
+      if (!ref) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsVisible({
+            ...isVisible,
+            [String(ref.current?.id)]: entry.isIntersecting,
+          });
+        },
+        { threshold: 1 }
+      );
+
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+
+      return () => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      };
+    };
+
+    observerToggle(aboutRef);
+    observerToggle(projectRef);
+    observerToggle(experienceRef);
+  }, []);
+
+  useEffect(() => {
+    if (ulRef.current) {
+      ulRef.current[0].className = isVisible.about
+        ? "opacity-100"
+        : "opacity-50";
+      ulRef.current[1].className = isVisible.projects
+        ? "opacity-100"
+        : "opacity-50";
+      ulRef.current[2].className = isVisible.experience
+        ? "opacity-100"
+        : "opacity-50";
+    }
+  }, [isVisible]);
+
   return (
     <>
       <Ligth />
@@ -25,7 +82,8 @@ export default function Home() {
           <nav className="relative">
             <Ul
               elementChildren={["Sobre", "Projetos", "Experiência"]}
-              className="opacity-50 uppercase flex flex-col gap-5"
+              className="uppercase flex flex-col gap-5"
+              ulRef={ulRef}
             />
           </nav>
           <Anchor
@@ -52,11 +110,13 @@ export default function Home() {
           <Sections
             elementChildren={[
               <About
+                ref={aboutRef}
                 paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
                 keyWords={["NextJS,"]}
                 boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
               />,
               <Projects
+                ref={projectRef}
                 projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
                 projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
                 projectUrl="https://pnsdremedios-map.vercel.app/"
@@ -65,6 +125,7 @@ export default function Home() {
                 boldWords={["mapa", "municipal"]}
               />,
               <Experience
+                ref={experienceRef}
                 experienceHeader="2025 - Home-office"
                 experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
                 keyWords={["NextJS,", "API,", "hooks"]}

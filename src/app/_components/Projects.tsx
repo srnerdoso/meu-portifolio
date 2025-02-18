@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ElementProps from "./interfaces/ElementsProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
+import DivProps from "./interfaces/DivProps";
 
 interface ProjectProps extends Pick<ParagraphProps, "boldWords" | "keyWords"> {
   projectName: string;
@@ -19,7 +20,8 @@ export default function Projects({
   projectDescription,
   keyWords,
   boldWords,
-}: ProjectProps) {
+  ref,
+}: ProjectProps & DivProps) {
   const ProjectLinkComponent = ({
     projectChildren,
     className,
@@ -32,7 +34,11 @@ export default function Projects({
   };
 
   return (
-    <section id={projectName} className="flex flex-row gap-7 font-medium">
+    <section
+      ref={ref}
+      id="projects"
+      className="flex flex-row gap-7 font-medium"
+    >
       <h2 className="sr-only">Projetos</h2>
 
       <ProjectLinkComponent

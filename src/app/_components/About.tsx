@@ -1,3 +1,4 @@
+import DivProps from "./interfaces/DivProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
 
 export default function About({
@@ -5,9 +6,10 @@ export default function About({
   paragraphWords,
   boldWords,
   keyWords,
-}: ParagraphProps) {
+  ref,
+}: ParagraphProps & DivProps) {
   return (
-    <section id="about" className={className}>
+    <section ref={ref} id="about" className={className}>
       <h2 className="sr-only">Sobre</h2>
       <Paragraph
         paragraphWords={paragraphWords}
