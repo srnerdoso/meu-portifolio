@@ -19,53 +19,43 @@ export default function Home() {
 
   const ulRef = useRef<HTMLLIElement[]>([]);
 
-  const [isVisible, setIsVisible] = useState<{
-    about: boolean;
-    projects: boolean;
-    experience: boolean;
-  }>({ about: false, projects: false, experience: false });
+  const [isVisible, setIsVisible] = useState<
+    Record<"about" | "projects" | "experience", boolean>
+  >({ about: false, projects: false, experience: false });
 
   useEffect(() => {
     const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
-      if (!ref) return;
       const observer = new IntersectionObserver(
         ([entry]) => {
-          setIsVisible({
-            ...isVisible,
+          setIsVisible((prev) => ({
+            ...prev,
             [String(ref.current?.id)]: entry.isIntersecting,
-          });
+          }));
         },
-        { threshold: 1 }
+        { threshold: 0.9 }
       );
 
       if (ref.current) {
         observer.observe(ref.current);
       }
-
-      return () => {
-        if (ref.current) {
-          observer.unobserve(ref.current);
-        }
-      };
     };
 
     observerToggle(aboutRef);
     observerToggle(projectRef);
     observerToggle(experienceRef);
-  }, []);
 
-  useEffect(() => {
-    if (ulRef.current) {
-      ulRef.current[0].className = isVisible.about
+    const updateUlVisibility = (
+      index: 0 | 1 | 2,
+      key: keyof typeof isVisible
+    ) => {
+      ulRef.current[index].className = isVisible?.[key]
         ? "opacity-100"
         : "opacity-50";
-      ulRef.current[1].className = isVisible.projects
-        ? "opacity-100"
-        : "opacity-50";
-      ulRef.current[2].className = isVisible.experience
-        ? "opacity-100"
-        : "opacity-50";
-    }
+    };
+
+    updateUlVisibility(0, "about");
+    updateUlVisibility(1, "projects");
+    updateUlVisibility(2, "experience");
   }, [isVisible]);
 
   return (
@@ -117,17 +107,21 @@ export default function Home() {
               keyWords={["NextJS,"]}
               boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
             />
+
             <Divider />
+
             <Projects
               ref={projectRef}
               projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
               projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
               projectUrl="https://pnsdremedios-map.vercel.app/"
               projectName="project1"
-              keyWords={["NextJS", "LeafletJS", "OSRM"]}
+              keyWords={["NextJS", "LeafletJS", "API", "OSRM"]}
               boldWords={["mapa", "municipal"]}
             />
+
             <Divider />
+
             <Experience
               ref={experienceRef}
               experienceHeader="2025 - Home-office"
@@ -141,7 +135,6 @@ export default function Home() {
                 "escalável",
               ]}
             />
-            <hr className="border-dotted opacity-25" />
           </div>
         </main>
       </div>
