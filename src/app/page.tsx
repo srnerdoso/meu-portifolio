@@ -21,7 +21,7 @@ export default function Home() {
 
   const [isVisible, setIsVisible] = useState<
     Record<"about" | "projects" | "experience", boolean>
-  >({ about: false, projects: false, experience: false });
+  >({ about: true, projects: false, experience: false });
 
   useEffect(() => {
     const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
@@ -49,7 +49,7 @@ export default function Home() {
       key: keyof typeof isVisible
     ) => {
       ulRef.current[index].className = isVisible?.[key]
-        ? "opacity-100"
+        ? "opacity-100 font-medium"
         : "opacity-50";
     };
 
@@ -72,7 +72,7 @@ export default function Home() {
           <nav className="relative">
             <Ul
               elementChildren={["Sobre", "Projetos", "Experiência"]}
-              className="uppercase flex flex-col gap-5"
+              className="uppercase font-medium flex flex-col gap-5"
               ulRef={ulRef}
             />
           </nav>
@@ -82,7 +82,7 @@ export default function Home() {
               <AiFillLinkedin />,
               <AiFillInstagram />,
             ]}
-            className="text-[33px] text-white"
+            className="text-[33px] text-white transition hover:text-black ease-in-out duration-75"
             href={[
               "https://github.com/srnerdoso",
               "https://www.linkedin.com/in/valdenor-filho-8b4942350/",
@@ -99,13 +99,14 @@ export default function Home() {
         <main className="ml-[537px]">
           <div
             id="container-sections"
-            className="flex flex-col gap-[100px] p-[93px] text-justify text-[0.83em]"
+            className="flex flex-col px-[93px] text-justify text-[0.83em]"
           >
             <About
               ref={aboutRef}
               paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
               keyWords={["NextJS,"]}
               boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
+              className="py-[30vh] flex justify-center items-center"
             />
 
             <Divider />

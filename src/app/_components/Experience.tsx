@@ -15,7 +15,7 @@ export default function Experience({
   ref,
 }: ExperienceProps) {
   return (
-    <section ref={ref} id="experience" className="flex flex-col justify-between gap-40">
+    <section ref={ref} id="experience" className="flex flex-col justify-center items-center py-[30vh] gap-40">
       <h2 className="sr-only">Experiência</h2>
       <div>
         <h3 className="uppercase font-medium">{experienceHeader}</h3>

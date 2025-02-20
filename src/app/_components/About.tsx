@@ -12,12 +12,14 @@ export default function About({
 }: AboutProps) {
   return (
     <section ref={ref} id="about" className={className}>
-      <h2 className="sr-only">Sobre</h2>
-      <Paragraph
-        paragraphWords={paragraphWords}
-        boldWords={boldWords}
-        keyWords={keyWords}
-      />
+      <div id="about-container">
+        <h2 className="sr-only">Sobre</h2>
+        <Paragraph
+          paragraphWords={paragraphWords}
+          boldWords={boldWords}
+          keyWords={keyWords}
+        />
+      </div>
     </section>
   );
 }
