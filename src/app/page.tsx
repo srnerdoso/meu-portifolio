@@ -62,15 +62,13 @@ export default function Home() {
     updateUlVisibility(0, "about");
     updateUlVisibility(1, "projects");
     updateUlVisibility(2, "experience");
-
-    console.log(Object.values(isVisible).indexOf(true));
   }, [isVisible]);
 
   return (
     <>
       <Ligth />
       <div id="container" className="relative flex flex-row max-w-7xl m-auto">
-        <header className="fixed w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start">
+        <header className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start">
           <div id="title" className="flex flex-col max-w-[317px]">
             <h1 className="text-[64px] font-semibold">Valdenor</h1>
             <p className="text-[15px] font-medium">
@@ -101,51 +99,46 @@ export default function Home() {
         </header>
         <div
           id="line"
-          className="fixed ml-[537px] flex justify-center items-center h-screen"
+          className="sticky top-0 flex justify-center items-center h-screen"
         >
           <hr className="w-[1px] h-[92vh] bg-white border-none" />
         </div>
-        <main className="ml-[537px]">
-          <div
-            id="container-sections"
-            className="flex flex-col px-[93px] text-justify text-[0.83em]"
-          >
-            <About
-              ref={aboutRef}
-              paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
-              keyWords={["NextJS,"]}
-              boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
-              className="py-[30vh] flex justify-center items-center"
-            />
+        <main className="flex flex-col px-[93px] text-justify text-[0.83em]">
+          <About
+            ref={aboutRef}
+            paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
+            keyWords={["NextJS,"]}
+            boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
+            className="py-[30vh] flex justify-center items-center"
+          />
 
-            <Divider />
+          <Divider />
 
-            <Projects
-              ref={projectRef}
-              projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
-              projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
-              projectUrl="https://pnsdremedios-map.vercel.app/"
-              projectName="project1"
-              keyWords={["NextJS", "LeafletJS", "API", "OSRM"]}
-              boldWords={["mapa", "municipal"]}
-            />
+          <Projects
+            ref={projectRef}
+            projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
+            projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
+            projectUrl="https://pnsdremedios-map.vercel.app/"
+            projectName="project1"
+            keyWords={["NextJS", "LeafletJS", "API", "OSRM"]}
+            boldWords={["mapa", "municipal"]}
+          />
 
-            <Divider />
+          <Divider />
 
-            <Experience
-              ref={experienceRef}
-              experienceHeader="2025 - Home-office"
-              experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
-              keyWords={["NextJS,", "API,", "hooks"]}
-              boldWords={[
-                "site",
-                "agendamentos",
-                "solução",
-                "intuitiva",
-                "escalável",
-              ]}
-            />
-          </div>
+          <Experience
+            ref={experienceRef}
+            experienceHeader="2025 - Home-office"
+            experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
+            keyWords={["NextJS,", "API,", "hooks"]}
+            boldWords={[
+              "site",
+              "agendamentos",
+              "solução",
+              "intuitiva",
+              "escalável",
+            ]}
+          />
         </main>
       </div>
     </>
