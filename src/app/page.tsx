@@ -32,7 +32,7 @@ export default function Home() {
             [String(ref.current?.id)]: entry.isIntersecting,
           }));
         },
-        { threshold: 0.9 }
+        { threshold: 0.7 }
       );
 
       if (ref.current) {
@@ -51,11 +51,19 @@ export default function Home() {
       ulRef.current[index].className = isVisible?.[key]
         ? "opacity-100 font-medium"
         : "opacity-50";
+
+      const img = ulRef.current[index].querySelector("img");
+      img?.setAttribute(
+        "src",
+        `/images/svg/line${isVisible[key] ? "-strong" : 1}.svg`
+      );
     };
 
     updateUlVisibility(0, "about");
     updateUlVisibility(1, "projects");
     updateUlVisibility(2, "experience");
+
+    console.log(Object.values(isVisible).indexOf(true));
   }, [isVisible]);
 
   return (
@@ -74,6 +82,7 @@ export default function Home() {
               elementChildren={["Sobre", "Projetos", "Experiência"]}
               className="uppercase font-medium flex flex-col gap-5"
               ulRef={ulRef}
+              activeIndex={Object.values(isVisible).findIndex((value) => value)}
             />
           </nav>
           <Anchor
