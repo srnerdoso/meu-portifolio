@@ -51,12 +51,6 @@ export default function Home() {
       ulRef.current[index].className = isVisible?.[key]
         ? "opacity-100 font-medium"
         : "opacity-50";
-
-      const img = ulRef.current[index].querySelector("img");
-      img?.setAttribute(
-        "src",
-        `/images/svg/line${isVisible[key] ? "-strong" : 1}.svg`
-      );
     };
 
     updateUlVisibility(0, "about");

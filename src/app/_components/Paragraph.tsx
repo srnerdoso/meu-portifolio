@@ -15,23 +15,22 @@ export default function Paragraph({
   const words: (React.ReactNode | string)[] = paragraphWords.split(" ");
 
   const updateWords = (wordsKeys: string[], wordType: "span" | "strong") => {
-    const indexesKeyWords = wordsKeys.reduce((acc, indexWord) => {
-      words.forEach((word, index) => {
-        if (indexWord === word) acc.push(index);
-      });
-
-      return acc;
-    }, [] as number[]);
-    indexesKeyWords.forEach((wordIndex, index) => {
-      wordType === "span"
-        ? (words[wordIndex] = (
+    wordsKeys.forEach((wordKey) => {
+      const wordIndex = words.indexOf(wordKey);
+      if (wordIndex !== -1) {
+        words[wordIndex] =
+          wordType === "span" ? (
             <span className="font-bold">{words[wordIndex]}</span>
-          ))
-        : (words[wordIndex] = <strong className="font-bold">{words[wordIndex]}</strong>);
+          ) : (
+            <strong className="font-bold">{words[wordIndex]}</strong>
+          );
+      }
     });
   };
   updateWords(boldWords, "span");
   updateWords(keyWords, "strong");
 
-  return words.map((word, index) => <React.Fragment key={`word-${index}`}>{word} </React.Fragment>);
+  return words.map((word, index) => (
+    <React.Fragment key={`word-${index}`}>{word} </React.Fragment>
+  ));
 }

@@ -1,3 +1,4 @@
+import NextImage from "next/image";
 import Paragraph, { ParagraphProps } from "./Paragraph";
 import ProjectLinkComponent from "./ProjectLinkComponent";
 import DivProps from "./interfaces/DivProps";
@@ -29,10 +30,12 @@ export default function Projects({
         <h2 className="sr-only">Projetos</h2>
         <ProjectLinkComponent
           projectChildren={
-            <img
+            <NextImage
               src={`/images/projects/${projectName}.png`}
               alt={projectName}
-              className="min-w-44 max-w-44 border-[2px] border-link"
+              width={1740}
+              height={980}
+              className="border-[2px] border-link"
             />
           }
           projectUrl={projectUrl}

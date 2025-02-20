@@ -1,3 +1,4 @@
+import NextImage from "next/image";
 import { useRef } from "react";
 import ElementProps from "./interfaces/ElementsProps";
 
@@ -6,7 +7,12 @@ interface UlProps extends ElementProps {
   activeIndex: number;
 }
 
-export default function Ul({ elementChildren, className, ulRef, activeIndex }: UlProps) {
+export default function Ul({
+  elementChildren,
+  className,
+  ulRef,
+  activeIndex,
+}: UlProps) {
   const liRefs = useRef<HTMLLIElement[]>([]);
 
   if (ulRef) ulRef.current = liRefs.current;
@@ -21,7 +27,17 @@ export default function Ul({ elementChildren, className, ulRef, activeIndex }: U
           key={`li-${index}`}
         >
           <div className="flex gap-5">
-            <img key={`img-${index}`} src={`/images/svg/line${index === activeIndex ? "-strong" : 1}.svg`} />
+            <NextImage
+              key={`img-${index}`}
+              alt="line"
+              width={index === activeIndex ? 200 : 100}
+              height={index === activeIndex ? 2 : 1}
+              src={`/images/svg/line${
+                index === activeIndex ? "-strong" : 1
+              }.svg`}
+              priority
+              className="w-auto h-auto"
+            />
             {li}
           </div>
         </li>

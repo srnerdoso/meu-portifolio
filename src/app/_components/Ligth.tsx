@@ -1,3 +1,4 @@
+import NextImage from "next/image";
 import { useEffect, useRef } from "react";
 
 export default function Light() {
@@ -34,10 +35,14 @@ export default function Light() {
 
   return (
     <div className="fixed w-full h-full overflow-hidden">
-      <img
+      <NextImage
         src="/images/png/ligth-effect.png"
+        alt="ligth-effect"
         ref={lightRef}
-        className="fixed w-[1000px] h-[1000px] opacity-5 pointer-events-none -translate-x-1/2 -translate-y-1/2"
+        width={1000}
+        height={1000}
+        priority
+        className="fixed opacity-5 pointer-events-none -translate-x-1/2 -translate-y-1/2"
       />
     </div>
   );
