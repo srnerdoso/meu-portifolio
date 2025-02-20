@@ -11,7 +11,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        linkColor: "var(--linkColor)",
+        link: "var(--linkColor)",
         pointerLightColor: "var(--pointerLightColor)",
         mainTextColor: "var(--mainTextColor)",
         footerBackground: "var(--footerBackground)",
