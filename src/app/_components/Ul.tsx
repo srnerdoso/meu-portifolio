@@ -24,11 +24,11 @@ export default function Ul({
           ref={(el) => {
             if (el) liRefs.current[index] = el;
           }}
-          key={`li-${index}`}
+          key={`liNav-${index}`}
         >
           <div className="flex gap-5">
             <NextImage
-              key={`img-${index}`}
+              key={`imgLine-${index}`}
               alt="line"
               width={index === activeIndex ? 200 : 100}
               height={index === activeIndex ? 2 : 1}
