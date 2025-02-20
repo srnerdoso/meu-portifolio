@@ -9,6 +9,7 @@ import Projects from "./_components/Projects";
 import Ul from "./_components/Ul";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
+import Link from "next/link";
 
 type SectionsRef = HTMLDivElement | null;
 
@@ -103,7 +104,7 @@ export default function Home() {
             paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
             keyWords={["NextJS,"]}
             boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
-            className="py-[30vh] flex justify-center items-center"
+            className="py-[30vh] flex justify-center items-center select-none"
           />
 
           <Divider />

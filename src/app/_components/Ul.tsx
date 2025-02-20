@@ -1,6 +1,7 @@
 import NextImage from "next/image";
 import { useRef } from "react";
 import ElementProps from "./interfaces/ElementsProps";
+import Link from "next/link";
 
 interface UlProps extends ElementProps {
   ulRef?: React.RefObject<HTMLLIElement[]>;
@@ -25,8 +26,20 @@ export default function Ul({
             if (el) liRefs.current[index] = el;
           }}
           key={`liNav-${index}`}
+          className="transition-all duration-300 ease-in-out"
         >
-          <div className="flex gap-5">
+          <Link
+            href={
+              li === "Projetos"
+                ? "#projects"
+                : li === "Contato"
+                ? "#contact"
+                : li === "Experiência"
+                ? "#experience"
+                : "#"
+            }
+            className="text-white flex gap-5"
+          >
             <NextImage
               key={`imgLine-${index}`}
               alt="line"
@@ -39,7 +52,7 @@ export default function Ul({
               className="w-auto h-auto"
             />
             {li}
-          </div>
+          </Link>
         </li>
       ))}
     </ul>
