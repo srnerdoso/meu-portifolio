@@ -79,9 +79,9 @@ export default function Home() {
           </nav>
           <Anchor
             elementChildren={[
-              <AiFillGithub />,
-              <AiFillLinkedin />,
-              <AiFillInstagram />,
+              <AiFillGithub key={"iconGithub"} />,
+              <AiFillLinkedin key={"iconLinkedin"} />,
+              <AiFillInstagram key={"iconInstagram"} />,
             ]}
             className="text-[33px] text-white transition hover:text-black ease-in-out duration-75"
             href={[
