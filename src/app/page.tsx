@@ -9,6 +9,7 @@ import Projects from "./_components/Projects";
 import Ul from "./_components/Ul";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
+import Link from "next/link";
 
 type SectionsRef = HTMLDivElement | null;
 
@@ -49,8 +50,8 @@ export default function Home() {
       key: keyof typeof isVisible
     ) => {
       ulRef.current[index].className = isVisible?.[key]
-        ? "opacity-100 font-medium"
-        : "opacity-50";
+        ? "transition duration-300 ease-in-out opacity-100 font-medium"
+        : "transition duration-300 ease-in-out opacity-50";
     };
 
     updateUlVisibility(0, "about");
@@ -72,7 +73,7 @@ export default function Home() {
           <nav className="relative">
             <Ul
               elementChildren={["Sobre", "Projetos", "Experiência"]}
-              className="uppercase font-medium flex flex-col gap-5"
+              className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none"
               ulRef={ulRef}
               activeIndex={Object.values(isVisible).findIndex((value) => value)}
             />
@@ -83,7 +84,7 @@ export default function Home() {
               <AiFillLinkedin key={"iconLinkedin"} />,
               <AiFillInstagram key={"iconInstagram"} />,
             ]}
-            className="text-[33px] text-white transition hover:text-black ease-in-out duration-75"
+            className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
             href={[
               "https://github.com/srnerdoso",
               "https://www.linkedin.com/in/valdenor-filho-8b4942350/",
