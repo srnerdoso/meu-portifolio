@@ -9,7 +9,6 @@ import Projects from "./_components/Projects";
 import Ul from "./_components/Ul";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
-import Link from "next/link";
 
 type SectionsRef = HTMLDivElement | null;
 

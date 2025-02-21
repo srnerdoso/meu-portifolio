@@ -1,6 +1,5 @@
 import DivProps from "./interfaces/DivProps";
 import Paragraph, { ParagraphProps } from "./Paragraph";
-import { Element } from "react-scroll";
 
 export interface AboutProps extends ParagraphProps, DivProps {}
 
