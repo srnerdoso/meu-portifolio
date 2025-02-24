@@ -153,7 +153,7 @@ export default function Home() {
             <nav className="relative">
               <Ul
                 elementChildren={["Sobre", "Projetos", "Experiência"]}
-                className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none max-xl:flex-row max-xl:text-xs max-xl:justify-center max-xl:py-2"
+                className="uppercase font-medium flex flex-col gap-2 cursor-pointer select-none max-xl:flex-row max-xl:text-xs max-xl:justify-center max-xl:py-2"
                 ulRef={ulRef}
                 windowWidth={windowWidth ?? 390}
                 activeIndex={Object.values(isVisible).findIndex(

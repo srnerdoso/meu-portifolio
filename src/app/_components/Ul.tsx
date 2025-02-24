@@ -40,8 +40,6 @@ export default function Ul({
               ? isActiveIndex(index)
                 ? "translateX(2.6rem)"
                 : "none"
-              : isActiveIndex(index)
-              ? "scale(1.1)"
               : "none",
             transition: "transform 100ms ease-in-out",
           }}
@@ -63,19 +61,33 @@ export default function Ul({
             <NextImage
               key={`imgLine-${index}`}
               alt="line"
-              width={isActiveIndex(index) ? 200 : 100}
-              height={isActiveIndex(index) ? 2 : 1}
-              src={`/images/svg/line1.svg`}
+              width={isMaxXl() ? 1 : isActiveIndex(index) ? 200 : 100}
+              height={isMaxXl() ? 9 : isActiveIndex(index) ? 2 : 1}
+              src={
+                isMaxXl() ? "/images/svg/line1.svg" : "/images/svg/line-nav.svg"
+              }
               priority
-              className="w-auto h-auto max-xl:hidden"
+              className="w-auto h-auto"
               style={{
-                transform: isActiveIndex(index)
-                  ? "scaleX(2) scaleY(2) translateX(-0.7rem)"
-                  : "scaleX(1)",
+                transform:
+                  isMaxXl() && isActiveIndex(index)
+                    ? "scaleX(2) scaleY(2) translateX(-0.7rem)"
+                    : "none",
                 transition: "transform 100ms ease-in-out",
               }}
             />
             {li}
+            {!isActiveIndex(index) &&
+              index === elementChildren.length - 1 &&
+              !isMaxXl() && (
+                <NextImage
+                  width={1}
+                  height={9}
+                  src="/images/svg/line-nav.svg"
+                  alt="line"
+                  className="w-auto h-auto"
+                />
+              )}
           </Link>
         </li>
       ))}
