@@ -30,16 +30,17 @@ export default function Home() {
   const [windowWidth, setWindowWidth] = useState<number | 390>(390);
 
   useEffect(() => {
-    if (window !== undefined) return;
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
+    if (window !== undefined) {
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
 
       window.addEventListener("resize", handleResize);
 
       return () => {
         window.removeEventListener("resize", handleResize);
       };
-    };
+    }
   }, [windowWidth]);
 
   useEffect(() => {
