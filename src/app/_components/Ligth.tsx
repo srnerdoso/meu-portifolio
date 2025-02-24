@@ -10,13 +10,14 @@ export default function Light({ titleRef }: LigthProps) {
   const target = useRef({ x: 300, y: 300 });
   const pos = useRef({ x: 0, y: 0 });
   
-  if (titleRef.current) {
-    const rect = titleRef.current.getBoundingClientRect();
-    target.current.x = rect.left + rect.width / 2;
-    target.current.y = rect.top + rect.height / 2;
-  }
-
+  
   useEffect(() => {
+    if (titleRef.current) {
+      const rect = titleRef.current.getBoundingClientRect();
+      target.current.x = rect.left + rect.width / 2;
+      target.current.y = rect.top + rect.height / 2;
+    }
+
     const handleMouseMove = (e: MouseEvent | TouchEvent) => {
       if (e instanceof TouchEvent) {
         target.current.x = e.touches[0].clientX;
@@ -46,6 +47,7 @@ export default function Light({ titleRef }: LigthProps) {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleMouseMove);
     };
   }, []);
 

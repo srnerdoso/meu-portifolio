@@ -72,7 +72,7 @@ export default function Ul({
                 transform: isActiveIndex(index)
                   ? "scaleX(2) scaleY(2) translateX(-0.7rem)"
                   : "scaleX(1)",
-                transition: "transform 500ms ease-in-out",
+                transition: "transform 100ms ease-in-out",
               }}
             />
             {li}

@@ -31,7 +31,15 @@ export default function Home() {
 
   useEffect(() => {
     if (window !== undefined) {
-      setWindowWidth(window.innerWidth);
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
     }
   }, [windowWidth]);
 
@@ -100,6 +108,27 @@ export default function Home() {
     };
   }, [headerVisible]);
 
+  const HeaderContainer = ({
+    children,
+  }: Readonly<{
+    children: React.ReactNode;
+  }>) => {
+    if (windowWidth < 1280) {
+      return (
+        <div
+          id="header-container"
+          className="flex m-auto"
+          style={{
+            height: windowWidth,
+          }}
+        >
+          <>{children}</>
+        </div>
+      );
+    }
+    return <>{children}</>;
+  };
+
   return (
     <>
       <Ligth titleRef={titleRef} />
@@ -109,7 +138,7 @@ export default function Home() {
       >
         <div
           id="header-container"
-          className="flex m-auto px"
+          className="sticky top-0 flex max-xl:static max-xl:m-auto min-xl:hidden"
           style={{
             height: `${windowWidth < 1280 ? `${windowWidth}px` : "100vh"}`,
           }}
@@ -121,7 +150,7 @@ export default function Home() {
             <div
               ref={titleRef}
               id="title"
-              className="flex flex-col max-w-[317px] mt-auto"
+              className="flex flex-col max-w-[317px] max-xl:mt-auto"
             >
               <h1 className="text-[64px] text-center font-semibold">
                 Valdenor
@@ -164,7 +193,7 @@ export default function Home() {
           <hr className="w-[1px] h-[80vh] bg-white border-none" />
         </div>
 
-        <main className="flex flex-col px-[93px] text-justify text-[0.83em]">
+        <main className="flex flex-col px-[93px] text-justify text-[0.83em] max-xl:px-10">
           <About
             ref={aboutRef}
             paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
