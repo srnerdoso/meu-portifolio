@@ -2,6 +2,7 @@ import NextImage from "next/image";
 import Paragraph, { ParagraphProps } from "./Paragraph";
 import ProjectLinkComponent from "./ProjectLinkComponent";
 import DivProps from "./interfaces/DivProps";
+import { HiOutlineExternalLink } from "react-icons/hi";
 
 interface ProjectProps
   extends Pick<ParagraphProps & DivProps, "boldWords" | "keyWords" | "ref"> {
@@ -26,7 +27,10 @@ export default function Projects({
       id="projects"
       className="flex justify-center items-center py-[30vh] font-medium"
     >
-      <div id="projects-container" className="flex flex-row gap-7">
+      <div
+        id="projects-container"
+        className="flex flex-row gap-7 max-xl:flex-col"
+      >
         <h2 className="sr-only">Projetos</h2>
         <ProjectLinkComponent
           projectChildren={
@@ -41,11 +45,16 @@ export default function Projects({
           projectUrl={projectUrl}
         />
         <div id="projet-1">
-          <ProjectLinkComponent
-            projectChildren={projectTitle}
-            projectUrl={projectUrl}
-            className="font-medium"
-          />
+          <div id="project-link-container" className="flex flex-row gap-2">
+            <ProjectLinkComponent
+              projectChildren={projectTitle}
+              projectUrl={projectUrl}
+              className="font-medium"
+            />
+            <HiOutlineExternalLink
+              className="text-link w-4 h-4"
+            />
+          </div>
           <p>
             <Paragraph
               paragraphWords={projectDescription}
