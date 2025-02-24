@@ -30,17 +30,16 @@ export default function Home() {
   const [windowWidth, setWindowWidth] = useState<number | 390>(390);
 
   useEffect(() => {
-    if (window !== undefined) {
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-      };
+    if (window !== undefined) return;
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
 
       window.addEventListener("resize", handleResize);
 
       return () => {
         window.removeEventListener("resize", handleResize);
       };
-    }
+    };
   }, [windowWidth]);
 
   useEffect(() => {
@@ -79,6 +78,10 @@ export default function Home() {
   }, [isVisible]);
 
   useEffect(() => {
+    const currentHeader = headerRef.current;
+
+    if (!currentHeader) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setHeaderVisible(entry.isIntersecting);
@@ -86,12 +89,12 @@ export default function Home() {
       { threshold: 0.1 }
     );
 
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
+    if (currentHeader) {
+      observer.observe(currentHeader);
     }
 
-    if (headerRef.current) {
-      const nav = headerRef.current.children[1];
+    if (currentHeader) {
+      const nav = currentHeader.children[1];
 
       headerVisible
         ? (nav.className =
@@ -101,9 +104,9 @@ export default function Home() {
     }
 
     return () => {
-      if (headerRef.current) {
+      if (currentHeader) {
         console.log(headerVisible);
-        observer.unobserve(headerRef.current);
+        observer.unobserve(currentHeader);
       }
     };
   }, [headerVisible]);

@@ -49,7 +49,7 @@ export default function Light({ titleRef }: LigthProps) {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleMouseMove);
     };
-  }, []);
+  }, [titleRef]);
 
   return (
     <div className="fixed w-full h-full overflow-hidden">
