@@ -17,11 +17,15 @@ export default function Home() {
   const projectRef = useRef<SectionsRef>(null);
   const experienceRef = useRef<SectionsRef>(null);
 
+  const headerRef = useRef<HTMLDivElement>(null);
+
   const ulRef = useRef<HTMLLIElement[]>([]);
 
   const [isVisible, setIsVisible] = useState<
     Record<"about" | "projects" | "experience", boolean>
   >({ about: true, projects: false, experience: false });
+
+  const headerHeight = window.innerWidth;
 
   useEffect(() => {
     const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
@@ -60,43 +64,61 @@ export default function Home() {
 
   return (
     <>
-      <Ligth />
-      <div id="container" className="relative flex flex-row max-w-7xl m-auto">
-        <header className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start">
-          <div id="title" className="flex flex-col max-w-[317px]">
-            <h1 className="text-[64px] font-semibold">Valdenor</h1>
-            <p className="text-[15px] font-medium">
-              Front End com experiência crescente e foco em resultados
-            </p>
-          </div>
-          <nav className="relative">
-            <Ul
-              elementChildren={["Sobre", "Projetos", "Experiência"]}
-              className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none"
-              ulRef={ulRef}
-              activeIndex={Object.values(isVisible).findIndex((value) => value)}
+      <Ligth titleRef={headerRef} />
+      <div
+        id="container"
+        className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
+      >
+        <div
+          id="header-container"
+          className={`flex m-auto max-xl:h-[${headerHeight}px]`}
+        >
+          <header className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start max-xl:p-0 max-xl:static max-xl:w-full max-xl:h-full max-xl:justify-center">
+            <div
+              ref={headerRef}
+              id="title"
+              className="flex flex-col max-w-[317px] mt-auto"
+            >
+              <h1 className="text-[64px] text-center font-semibold">
+                Valdenor
+              </h1>
+              <p className="text-[15px] font-medium max-xl:text-center">
+                Front End com experiência crescente e foco em resultados
+              </p>
+            </div>
+            <nav className="relative max-xl:static max-xl:w-full max-xl:order-3 mt-auto">
+              <Ul
+                elementChildren={["Sobre", "Projetos", "Experiência"]}
+                className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none max-xl:flex-row max-xl:text-xs max-xl:justify-center"
+                ulRef={ulRef}
+                activeIndex={Object.values(isVisible).findIndex(
+                  (value) => value
+                )}
+              />
+            </nav>
+            <Anchor
+              elementChildren={[
+                <AiFillGithub key={"iconGithub"} />,
+                <AiFillLinkedin key={"iconLinkedin"} />,
+                <AiFillInstagram key={"iconInstagram"} />,
+              ]}
+              className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
+              href={[
+                "https://github.com/srnerdoso",
+                "https://www.linkedin.com/in/valdenor-filho-8b4942350/",
+                "https://www.instagram.com/srnerdoso/",
+              ]}
             />
-          </nav>
-          <Anchor
-            elementChildren={[
-              <AiFillGithub key={"iconGithub"} />,
-              <AiFillLinkedin key={"iconLinkedin"} />,
-              <AiFillInstagram key={"iconInstagram"} />,
-            ]}
-            className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
-            href={[
-              "https://github.com/srnerdoso",
-              "https://www.linkedin.com/in/valdenor-filho-8b4942350/",
-              "https://www.instagram.com/srnerdoso/",
-            ]}
-          />
-        </header>
+          </header>
+        </div>
+        
         <div
           id="line"
           className="sticky top-0 flex justify-center items-center h-screen"
         >
           <hr className="w-[1px] h-[92vh] bg-white border-none" />
         </div>
+
         <main className="flex flex-col px-[93px] text-justify text-[0.83em]">
           <About
             ref={aboutRef}

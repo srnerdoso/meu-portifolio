@@ -1,18 +1,34 @@
 import NextImage from "next/image";
 import { useEffect, useRef } from "react";
 
-export default function Light() {
+interface LigthProps {
+  titleRef: React.RefObject<HTMLDivElement | null>;
+}
+
+export default function Light({ titleRef }: LigthProps) {
   const lightRef = useRef<HTMLImageElement>(null);
-  const target = useRef({ x: 0, y: 0 });
+  const target = useRef({ x: 300, y: 300 });
   const pos = useRef({ x: 0, y: 0 });
+  
+  if (titleRef.current) {
+    const rect = titleRef.current.getBoundingClientRect();
+    target.current.x = rect.left + rect.width / 2;
+    target.current.y = rect.top + rect.height / 2;
+  }
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      target.current.x = e.clientX;
-      target.current.y = e.clientY;
+    const handleMouseMove = (e: MouseEvent | TouchEvent) => {
+      if (e instanceof TouchEvent) {
+        target.current.x = e.touches[0].clientX;
+        target.current.y = e.touches[0].clientY;
+      } else {
+        target.current.x = e.clientX;
+        target.current.y = e.clientY;
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleMouseMove);
 
     const updatePosition = () => {
       pos.current.x += (target.current.x - pos.current.x) * 0.1;

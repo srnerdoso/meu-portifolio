@@ -52,7 +52,7 @@ export default function Ul({
               height={index === activeIndex ? 2 : 1}
               src={`/images/svg/line1.svg`}
               priority
-              className="w-auto h-auto"
+              className="w-auto h-auto max-xl:hidden"
               style={{
                 transform:
                   index === activeIndex
