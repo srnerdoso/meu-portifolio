@@ -97,11 +97,13 @@ export default function Home() {
     if (currentHeader) {
       const nav = currentHeader.children[1];
 
-      headerVisible
-        ? (nav.className =
-            "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto")
-        : (nav.className =
-            "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:bg-[#475F83] max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50");
+      if (headerVisible) {
+        nav.className =
+          "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto";
+      } else {
+        nav.className =
+          "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:bg-[#475F83] max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50";
+      }
     }
 
     return () => {
