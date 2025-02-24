@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import About from "./_components/About";
 import Anchor from "./_components/Anchor";
@@ -17,15 +17,23 @@ export default function Home() {
   const projectRef = useRef<SectionsRef>(null);
   const experienceRef = useRef<SectionsRef>(null);
 
-  const headerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLHeadElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   const ulRef = useRef<HTMLLIElement[]>([]);
 
   const [isVisible, setIsVisible] = useState<
     Record<"about" | "projects" | "experience", boolean>
   >({ about: true, projects: false, experience: false });
+  const [headerVisible, setHeaderVisible] = useState(true);
 
-  const headerHeight = window.innerWidth;
+  const [windowWidth, setWindowWidth] = useState<number | 390>(390);
+
+  useEffect(() => {
+    if (window !== undefined) {
+      setWindowWidth(window.innerWidth);
+    }
+  }, [windowWidth]);
 
   useEffect(() => {
     const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
@@ -62,20 +70,56 @@ export default function Home() {
     updateUlVisibility(2, "experience");
   }, [isVisible]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHeaderVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (headerRef.current) {
+      observer.observe(headerRef.current);
+    }
+
+    if (headerRef.current) {
+      const nav = headerRef.current.children[1];
+
+      headerVisible
+        ? (nav.className =
+            "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto")
+        : (nav.className =
+            "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:h-[50px] max-xl:bg-[#475F83] max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50");
+    }
+
+    return () => {
+      if (headerRef.current) {
+        console.log(headerVisible);
+        observer.unobserve(headerRef.current);
+      }
+    };
+  }, [headerVisible]);
+
   return (
     <>
-      <Ligth titleRef={headerRef} />
+      <Ligth titleRef={titleRef} />
       <div
         id="container"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
       >
         <div
           id="header-container"
-          className={`flex m-auto max-xl:h-[${headerHeight}px]`}
+          className="flex m-auto px"
+          style={{
+            height: `${windowWidth < 1280 ? `${windowWidth}px` : "100vh"}`,
+          }}
         >
-          <header className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start max-xl:p-0 max-xl:static max-xl:w-full max-xl:h-full max-xl:justify-center">
+          <header
+            ref={headerRef}
+            className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start max-xl:p-0 max-xl:static max-xl:w-full max-xl:h-full max-xl:justify-center"
+          >
             <div
-              ref={headerRef}
+              ref={titleRef}
               id="title"
               className="flex flex-col max-w-[317px] mt-auto"
             >
@@ -86,11 +130,12 @@ export default function Home() {
                 Front End com experiência crescente e foco em resultados
               </p>
             </div>
-            <nav className="relative max-xl:static max-xl:w-full max-xl:order-3 mt-auto">
+            <nav className="relative">
               <Ul
                 elementChildren={["Sobre", "Projetos", "Experiência"]}
                 className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none max-xl:flex-row max-xl:text-xs max-xl:justify-center"
                 ulRef={ulRef}
+                windowWidth={windowWidth ?? 390}
                 activeIndex={Object.values(isVisible).findIndex(
                   (value) => value
                 )}
@@ -111,12 +156,12 @@ export default function Home() {
             />
           </header>
         </div>
-        
+
         <div
           id="line"
-          className="sticky top-0 flex justify-center items-center h-screen"
+          className="sticky top-0 flex justify-center items-center h-screen max-xl:hidden"
         >
-          <hr className="w-[1px] h-[92vh] bg-white border-none" />
+          <hr className="w-[1px] h-[80vh] bg-white border-none" />
         </div>
 
         <main className="flex flex-col px-[93px] text-justify text-[0.83em]">

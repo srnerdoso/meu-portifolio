@@ -6,6 +6,7 @@ import { Link } from "react-scroll";
 interface UlProps extends ElementProps {
   ulRef?: React.RefObject<HTMLLIElement[]>;
   activeIndex: number;
+  windowWidth: number;
 }
 
 export default function Ul({
@@ -13,10 +14,18 @@ export default function Ul({
   className,
   ulRef,
   activeIndex,
+  windowWidth,
 }: UlProps) {
   const liRefs = useRef<HTMLLIElement[]>([]);
 
   if (ulRef) ulRef.current = liRefs.current;
+
+  const isMaxXl = () => {
+    if (windowWidth > 1280) return true;
+    return false;
+  };
+
+  const isActiveIndex = (index: number) => index === activeIndex;
 
   return (
     <ul className={className}>
@@ -27,8 +36,14 @@ export default function Ul({
           }}
           key={`liNav-${index}`}
           style={{
-            transform: index === activeIndex ? "translateX(2.6rem)" : "",
-            transition: "transform 500ms ease-in-out",
+            transform: isMaxXl()
+              ? isActiveIndex(index)
+                ? "translateX(2.6rem)"
+                : "none"
+              : isActiveIndex(index)
+              ? "scale(1.1)"
+              : "none",
+            transition: "transform 100ms ease-in-out",
           }}
         >
           <Link
@@ -48,16 +63,15 @@ export default function Ul({
             <NextImage
               key={`imgLine-${index}`}
               alt="line"
-              width={index === activeIndex ? 200 : 100}
-              height={index === activeIndex ? 2 : 1}
+              width={isActiveIndex(index) ? 200 : 100}
+              height={isActiveIndex(index) ? 2 : 1}
               src={`/images/svg/line1.svg`}
               priority
               className="w-auto h-auto max-xl:hidden"
               style={{
-                transform:
-                  index === activeIndex
-                    ? "scaleX(2) scaleY(2) translateX(-0.7rem)"
-                    : "scaleX(1)",
+                transform: isActiveIndex(index)
+                  ? "scaleX(2) scaleY(2) translateX(-0.7rem)"
+                  : "scaleX(1)",
                 transition: "transform 500ms ease-in-out",
               }}
             />
