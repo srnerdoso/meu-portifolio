@@ -102,7 +102,6 @@ export default function Home() {
 
     return () => {
       if (currentHeader) {
-        console.log(headerVisible);
         observer.unobserve(currentHeader);
       }
     };
@@ -125,10 +124,6 @@ export default function Home() {
 
   return (
     <div
-      onMouseMove={(ev) => [ev.clientX, ev.clientY]}
-      onTouchMove={(ev) =>
-        console.log([ev.touches[0].clientX, ev.touches[0].clientY])
-      }
       ref={containerRef}
       className="m-0 p-0"
     >
