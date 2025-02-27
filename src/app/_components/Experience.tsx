@@ -18,7 +18,7 @@ export default function Experience({
     <section
       ref={ref}
       id="experience"
-      className="flex flex-col justify-center items-center py-[30vh] gap-40"
+      className="flex flex-col justify-center items-center py-[30vh] gap-40 max-xl:py-[20vh]"
     >
       <h2 className="sr-only">Experiência</h2>
       <div>

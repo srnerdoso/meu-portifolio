@@ -6,19 +6,21 @@ import About from "./_components/About";
 import Anchor from "./_components/Anchor";
 import Experience from "./_components/Experience";
 import Projects from "./_components/Projects";
-import Ul from "./_components/Ul";
+import UlPc from "./_components/UlNavPc";
+import UlMobile from "./_components/UlNavMobile";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
 
 type SectionsRef = HTMLDivElement | null;
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const aboutRef = useRef<SectionsRef>(null);
   const projectRef = useRef<SectionsRef>(null);
   const experienceRef = useRef<SectionsRef>(null);
 
   const headerRef = useRef<HTMLHeadElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
   const ulRef = useRef<HTMLLIElement[]>([]);
   const footerRef = useRef<HTMLDivElement>(null);
 
@@ -27,23 +29,13 @@ export default function Home() {
   >({ about: true, projects: false, experience: false });
   const [headerVisible, setHeaderVisible] = useState(true);
 
-  const [windowWidth, setWindowWidth] = useState<number | 390>(390);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    if (window !== undefined) {
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-      };
+    if (containerRef.current)
+      setContainerWidth(containerRef.current?.clientWidth);
 
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, [windowWidth]);
-
-  useEffect(() => {
     const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -68,9 +60,11 @@ export default function Home() {
       index: 0 | 1 | 2,
       key: keyof typeof isVisible
     ) => {
-      ulRef.current[index].className = isVisible?.[key]
-        ? "transition duration-300 ease-in-out opacity-100 font-medium"
-        : "transition duration-300 ease-in-out opacity-50";
+      if (ulRef.current[index]) {
+        ulRef.current[index].className = isVisible?.[key]
+          ? "transition duration-300 ease-in-out opacity-100 font-semibold"
+          : "transition duration-300 ease-in-out opacity-50";
+      }
     };
 
     updateUlVisibility(0, "about");
@@ -99,10 +93,10 @@ export default function Home() {
 
       if (headerVisible) {
         nav.className =
-          "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto";
+          "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto max-xl:py-5";
       } else {
         nav.className =
-          "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:bg-[#475F83] max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50";
+          "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:bg-background max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50 max-xl:shadow-lg max-xl:py-5";
       }
     }
 
@@ -126,26 +120,32 @@ export default function Home() {
       "https://www.instagram.com/srnerdoso/",
     ],
   ];
+
+  const navChildrenArr = ["Sobre", "Projetos", "Experiência"];
+
   return (
-    <>
-      <Ligth titleRef={titleRef} />
+    <div
+      onMouseMove={(ev) => [ev.clientX, ev.clientY]}
+      onTouchMove={(ev) =>
+        console.log([ev.touches[0].clientX, ev.touches[0].clientY])
+      }
+      ref={containerRef}
+      className="m-0 p-0"
+    >
+      <Ligth containerRef={containerRef} headerRef={headerRef} />
       <div
         id="container"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
       >
         <div
           id="header-container"
-          className="sticky top-0 flex max-xl:static max-xl:m-auto min-xl:hidden max-xl:shadow-lg max-xl:w-full"
-          style={{
-            height: `${windowWidth < 1280 ? `${windowWidth}px` : "100vh"}`,
-          }}
+          className="sticky top-0 flex max-xl:static max-xl:m-auto min-xl:hidden max-xl:shadow-lg max-xl:w-full max-xl:h-[50vh] max-xl:justify-center"
         >
           <header
             ref={headerRef}
             className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start max-xl:p-0 max-xl:static max-xl:w-full max-xl:h-full max-xl:justify-center"
           >
             <div
-              ref={titleRef}
               id="title"
               className="flex flex-col max-w-[317px] max-xl:mt-auto max-xl:mx-auto max-xl:max-w-40"
             >
@@ -157,15 +157,24 @@ export default function Home() {
               </p>
             </div>
             <nav className="relative">
-              <Ul
-                elementChildren={["Sobre", "Projetos", "Experiência"]}
-                className="uppercase font-medium flex flex-col gap-2 cursor-pointer select-none max-xl:flex-row max-xl:text-xs max-xl:justify-center max-xl:py-2"
-                ulRef={ulRef}
-                windowWidth={windowWidth ?? 390}
-                activeIndex={Object.values(isVisible).findIndex(
-                  (value) => value
-                )}
-              />
+              {containerWidth > 1280 ? (
+                <UlPc
+                  elementChildren={navChildrenArr}
+                  className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none"
+                  ulRef={ulRef}
+                  activeIndex={Object.values(isVisible).findIndex(
+                    (value) => value
+                  )}
+                />
+              ) : (
+                <UlMobile
+                  elementChildren={navChildrenArr}
+                  className="uppercase font-medium flex flex-row justify-center gap-2 cursor-pointer select-none"
+                  activeIndex={Object.values(isVisible).findIndex(
+                    (value) => value
+                  )}
+                />
+              )}
             </nav>
             <Anchor
               elementChildren={socials[0]}
@@ -189,7 +198,7 @@ export default function Home() {
             paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
             keyWords={["NextJS,"]}
             boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
-            className="py-[30vh] flex justify-center items-center"
+            className="py-[30vh] flex justify-center items-center max-xl:py-[20vh]"
           />
 
           <Divider />
@@ -235,6 +244,6 @@ export default function Home() {
           />
         </footer>
       </div>
-    </>
+    </div>
   );
 }

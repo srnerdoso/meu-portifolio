@@ -25,7 +25,7 @@ export default function Projects({
     <section
       ref={ref}
       id="projects"
-      className="flex justify-center items-center py-[30vh] font-medium"
+      className="flex justify-center items-center py-[30vh] font-medium max-xl:py-[20vh]"
     >
       <div
         id="projects-container"

@@ -2,21 +2,24 @@ import NextImage from "next/image";
 import { useEffect, useRef } from "react";
 
 interface LigthProps {
-  titleRef: React.RefObject<HTMLDivElement | null>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  headerRef: React.RefObject<HTMLHeadElement | null>;
 }
 
-export default function Light({ titleRef }: LigthProps) {
+export default function Light({ headerRef, containerRef }: LigthProps) {
   const lightRef = useRef<HTMLImageElement>(null);
   const target = useRef({ x: 300, y: 300 });
   const pos = useRef({ x: 0, y: 0 });
-  
-  
+
   useEffect(() => {
-    if (titleRef.current) {
-      const rect = titleRef.current.getBoundingClientRect();
-      target.current.x = rect.left + rect.width / 2;
-      target.current.y = rect.top + rect.height / 2;
-    }
+    const { current } = containerRef;
+    
+    if (!current) return;
+    if (!headerRef.current) return;
+
+    const rect = headerRef.current.getBoundingClientRect();
+    target.current.x = rect.width / 2;
+    target.current.y = rect.height / 2;
 
     const handleMouseMove = (e: MouseEvent | TouchEvent) => {
       if (e instanceof TouchEvent) {
@@ -28,8 +31,8 @@ export default function Light({ titleRef }: LigthProps) {
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleMouseMove);
+    current.addEventListener("mousemove", handleMouseMove);
+    current.addEventListener("touchmove", handleMouseMove);
 
     const updatePosition = () => {
       pos.current.x += (target.current.x - pos.current.x) * 0.1;
@@ -46,10 +49,10 @@ export default function Light({ titleRef }: LigthProps) {
     requestAnimationFrame(updatePosition);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleMouseMove);
+      current.removeEventListener("mousemove", handleMouseMove);
+      current.removeEventListener("touchmove", handleMouseMove);
     };
-  }, [titleRef]);
+  }, [headerRef]);
 
   return (
     <div className="fixed w-full h-full overflow-hidden">
