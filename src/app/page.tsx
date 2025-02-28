@@ -11,14 +11,9 @@ import UlMobile from "./_components/UlNavMobile";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
 
-type SectionsRef = HTMLDivElement | null;
-
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const aboutRef = useRef<SectionsRef>(null);
-  const projectRef = useRef<SectionsRef>(null);
-  const experienceRef = useRef<SectionsRef>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const headerRef = useRef<HTMLHeadElement>(null);
   const ulRef = useRef<HTMLLIElement[]>([]);
@@ -36,25 +31,33 @@ export default function Home() {
     if (containerRef.current)
       setContainerWidth(containerRef.current?.clientWidth);
 
-    const observerToggle = (ref: React.RefObject<HTMLDivElement | null>) => {
+    const getMainChildren = (childrenId: string) => {
+      if (!mainRef.current) return;
+
+      return mainRef.current.children.namedItem(childrenId);
+    };
+
+    const observerToggle = (element: Element) => {
       const observer = new IntersectionObserver(
         ([entry]) => {
           setIsVisible((prev) => ({
             ...prev,
-            [String(ref.current?.id)]: entry.isIntersecting,
+            [element.id]: entry.isIntersecting,
           }));
         },
+        // Quando tiver mais projetos diminuir o threshold para 0.3
         { threshold: 0.7 }
       );
 
-      if (ref.current) {
-        observer.observe(ref.current);
+      if (element) {
+        observer.observe(element);
       }
     };
 
-    observerToggle(aboutRef);
-    observerToggle(projectRef);
-    observerToggle(experienceRef);
+    ["about", "projects", "experience"].forEach((section) => {
+      const currentSection = getMainChildren(section);
+      currentSection && observerToggle(currentSection);
+    });
 
     const updateUlVisibility = (
       index: 0 | 1 | 2,
@@ -93,10 +96,10 @@ export default function Home() {
 
       if (headerVisible) {
         nav.className =
-          "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto max-xl:py-5";
+          "max-xl:static max-xl:w-full max-xl:order-3 max-xl:mt-auto max-xl:py-2";
       } else {
         nav.className =
-          "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:bg-background max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50 max-xl:shadow-lg max-xl:py-5";
+          "max-xl:fixed max-xl:transition max-xl:ease-in-out max-xl:top-0 max-xl:w-full max-xl:bg-background max-xl:items-center max-xl:justify-center max-xl:flex max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:z-50 max-xl:shadow-lg max-xl:py-2";
       }
     }
 
@@ -123,10 +126,7 @@ export default function Home() {
   const navChildrenArr = ["Sobre", "Projetos", "Experiência"];
 
   return (
-    <div
-      ref={containerRef}
-      className="m-0 p-0"
-    >
+    <div ref={containerRef} className="m-0 p-0">
       <Ligth containerRef={containerRef} headerRef={headerRef} />
       <div
         id="container"
@@ -187,9 +187,11 @@ export default function Home() {
           <hr className="w-[1px] h-[80vh] bg-white border-none" />
         </div>
 
-        <main className="flex flex-col px-[93px] text-justify text-xs max-xl:px-10">
+        <main
+          ref={mainRef}
+          className="flex flex-col px-[93px] text-justify text-xs max-xl:px-10"
+        >
           <About
-            ref={aboutRef}
             paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
             keyWords={["NextJS,"]}
             boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
@@ -199,7 +201,6 @@ export default function Home() {
           <Divider />
 
           <Projects
-            ref={projectRef}
             projectTitle="Mapa Paroquial - Paróquia Nossa Senhora dos Remédios"
             projectDescription="Criei um mapa municipal interativo das comunidades católicas de uma paróquia, com rotas dinâmicas que centralizam o trajeto selecionado. Desenvolvido em NextJS, o projeto utiliza Leaflet JS para a geração de tiles do mapa e a API OSRM para as rotas, proporcionando uma experiência prática e um aprendizado aprofundado em dados geográficos."
             projectUrl="https://pnsdremedios-map.vercel.app/"
@@ -211,7 +212,6 @@ export default function Home() {
           <Divider />
 
           <Experience
-            ref={experienceRef}
             experienceHeader="2025 - Home-office"
             experienceDescription="Estou desenvolvendo um site de agendamentos para diversos prestadores de serviços, incluindo barbeiros, salões e outros segmentos. Este foi e está sendo meu primeiro projeto com NextJS, onde aprofundei conhecimentos em hooks e requisições API, criando uma solução intuitiva e escalável para o gerenciamento de reservas."
             keyWords={["NextJS,", "API,", "hooks"]}
