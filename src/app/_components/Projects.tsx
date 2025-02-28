@@ -19,13 +19,11 @@ export default function Projects({
   projectUrl,
   keyWords,
   boldWords,
-  ref,
 }: ProjectProps) {
   return (
     <section
-      ref={ref}
       id="projects"
-      className="flex justify-center items-center py-[30vh] font-medium max-xl:py-[20vh]"
+      className="flex justify-center items-center py-[30vh] font-medium flex-col gap-10"
     >
       <div
         id="projects-container"
