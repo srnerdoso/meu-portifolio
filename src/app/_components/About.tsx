@@ -8,10 +8,9 @@ export default function About({
   paragraphWords,
   boldWords,
   keyWords,
-  ref,
 }: AboutProps) {
   return (
-    <section ref={ref} id="about" className={className}>
+    <section id="about" className={className}>
       <div id="about-container">
         <h2 className="sr-only">Sobre</h2>
         <Paragraph
