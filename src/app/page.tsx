@@ -56,7 +56,7 @@ export default function Home() {
 
     ["about", "projects", "experience"].forEach((section) => {
       const currentSection = getMainChildren(section);
-      currentSection && observerToggle(currentSection);
+      if (currentSection) observerToggle(currentSection)
     });
 
     const updateUlVisibility = (

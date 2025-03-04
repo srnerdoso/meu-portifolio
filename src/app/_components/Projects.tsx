@@ -21,6 +21,7 @@ export default function Projects({
   boldWords,
 }: ProjectProps) {
   return (
+    // tranformar em componente dinâmico
     <section
       id="projects"
       className="flex justify-center items-center py-[30vh] font-medium flex-col gap-10"
@@ -49,9 +50,7 @@ export default function Projects({
               projectUrl={projectUrl}
               className="font-medium"
             />
-            <HiOutlineExternalLink
-              className="text-link w-4 h-4"
-            />
+            <HiOutlineExternalLink className="text-link w-4 h-4" />
           </div>
           <p>
             <Paragraph

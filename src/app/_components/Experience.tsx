@@ -15,6 +15,7 @@ export default function Experience({
   ref,
 }: ExperienceProps) {
   return (
+    // tranformar em componente dinâmico
     <section
       ref={ref}
       id="experience"
