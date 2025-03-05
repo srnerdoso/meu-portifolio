@@ -43,7 +43,7 @@ export default function UlNavPc({
             }
             smooth={true}
             duration={500}
-            className="text-white flex gap-2 scroll-smooth items-center"
+            className="text-white flex gap-2 scroll-smooth items-center hover:no-underline"
           >
             {li !== "Projetos" && (
               <NextImage
