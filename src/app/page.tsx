@@ -6,33 +6,17 @@ import Divider from "./_components/Divider";
 import Paragraph from "./_components/Paragraph";
 import Sections from "./_components/Sections";
 import { useEffects, useRefs, useStates } from "./ts/hooks";
-import {
-  navChildrenArr,
-  experienceItems,
-  projectsItems,
-  socials,
-} from "./data/data";
+import { navChildrenArr, experienceItems, projectsItems, socials } from "./data/data";
 import Ul from "./_components/ts/Ul";
+
+// Fazer parte de enviar email de contato
+// Abaixo de todo o conteúdo com a possibilidade de scrollar quando chegar na parte inferior
 
 export default function Home() {
   const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
-  const {
-    isVisible,
-    setIsVisible,
-    headerVisible,
-    setHeaderVisible,
-    containerWidth,
-    setContainerWidth,
-  } = useStates();
+  const { isVisible, setIsVisible, headerVisible, setHeaderVisible, containerWidth, setContainerWidth, } = useStates();
 
-  useEffects.useVisibilityEffect(
-    containerRef,
-    setContainerWidth,
-    mainRef,
-    setIsVisible,
-    isVisible,
-    ulRef
-  );
+  useEffects.useVisibilityEffect( containerRef, setContainerWidth, mainRef, setIsVisible, isVisible, ulRef );
   useEffects.useHeaderVisibleEffect(headerRef, setHeaderVisible, headerVisible);
 
   return (
