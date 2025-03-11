@@ -1,18 +1,38 @@
 import NextImage from "next/image";
 import { useEffect, useRef } from "react";
 
-export default function Light() {
+interface LigthProps {
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  headerRef: React.RefObject<HTMLHeadElement | null>;
+}
+
+export default function Light({ headerRef, containerRef }: LigthProps) {
   const lightRef = useRef<HTMLImageElement>(null);
-  const target = useRef({ x: 0, y: 0 });
+  const target = useRef({ x: 300, y: 300 });
   const pos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      target.current.x = e.clientX;
-      target.current.y = e.clientY;
+    const { current } = containerRef;
+    
+    if (!current) return;
+    if (!headerRef.current) return;
+
+    const rect = headerRef.current.getBoundingClientRect();
+    target.current.x = rect.width / 2;
+    target.current.y = rect.height / 2;
+
+    const handleMouseMove = (e: MouseEvent | TouchEvent) => {
+      if (e instanceof TouchEvent) {
+        target.current.x = e.touches[0].clientX;
+        target.current.y = e.touches[0].clientY;
+      } else {
+        target.current.x = e.clientX;
+        target.current.y = e.clientY;
+      }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    current.addEventListener("mousemove", handleMouseMove);
+    current.addEventListener("touchmove", handleMouseMove);
 
     const updatePosition = () => {
       pos.current.x += (target.current.x - pos.current.x) * 0.1;
@@ -29,9 +49,10 @@ export default function Light() {
     requestAnimationFrame(updatePosition);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      current.removeEventListener("mousemove", handleMouseMove);
+      current.removeEventListener("touchmove", handleMouseMove);
     };
-  }, []);
+  }, [headerRef]);
 
   return (
     <div className="fixed w-full h-full overflow-hidden">
