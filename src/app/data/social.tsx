@@ -9,7 +9,7 @@ const socials = [
   [
     "https://github.com/srnerdoso",
     "https://www.linkedin.com/in/valdenor-filho-8b4942350/",
-    "https://www.instagram.com/srnerdoso/",
+    "https://www.instagram.com/valdenor.ts/",
   ],
 ];
 export default socials;
