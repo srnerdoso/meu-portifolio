@@ -1,5 +1,4 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
-import ContactmeInputs, { LabelInputProps } from "../types/ContactmeInputs";
+import { LabelInputProps } from "../types/ContactmeInputs";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { HTMLInputTypeAttribute, useRef } from "react";
 
