@@ -13,9 +13,7 @@ import {
 } from "./_data/data";
 import Ul from "./_components/ts/Ul";
 import Span from "./_components/Span";
-import LabelInput from "./_components/LabelInput";
-import { useForm, SubmitHandler } from "react-hook-form";
-import ContactmeInputs from "./types/ContactmeInputs";
+import ContactForm from "./_components/ContactForm";
 
 export default function Home() {
   const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
@@ -27,13 +25,6 @@ export default function Home() {
     containerWidth,
     setContainerWidth,
   } = useStates();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ContactmeInputs>();
-  const onSubmit: SubmitHandler<ContactmeInputs> = (data) => console.log(data);
 
   useEffects.useVisibilityEffect(
     containerRef,
@@ -133,27 +124,7 @@ export default function Home() {
           <Divider />
           <Sections.Experience items={experienceItems} />
           <Divider />
-          <form
-            id="contact-me"
-            className="py-[20vh] max-xl:py-[15vh] flex flex-col justify-center items-start gap-5 text-[16px] h-full"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <h2 className="uppercase font-medium">Contato</h2>
-            <LabelInput type="name" register={register} errors={errors}>
-              Nome
-            </LabelInput>
-            <LabelInput type="subject" register={register} errors={errors}>
-              Assunto
-            </LabelInput>
-            <LabelInput type="message" register={register} errors={errors}>
-              Mensagem
-            </LabelInput>
-            <input
-              type="submit"
-              value="Enviar"
-              className="h-10 w-full font-normal border-[1px] py-1 px-2 rounded-md hover:bg-white hover:text-background hover:transition hover:ease-in-out hover:duration-100"
-            />
-          </form>
+          <ContactForm />
         </main>
       </div>
       <footer
