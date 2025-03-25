@@ -1,12 +1,17 @@
 import Link from "next/link";
-import ElementProps from "./interfaces/ElementsProps";
-
-interface AnchorProps extends ElementProps {
+interface AnchorProps {
   href: string[];
   type: "footer" | "header";
+  children: React.ReactNode[];
+  className: string;
 }
 
-export default function Anchor({ elementChildren, className, href, type }: AnchorProps) {
+export default function Anchor({
+  children,
+  className,
+  href,
+  type,
+}: AnchorProps) {
   return (
     <div
       id="social"
@@ -15,7 +20,7 @@ export default function Anchor({ elementChildren, className, href, type }: Ancho
         top: type === "header" ? "8" : "auto",
       }}
     >
-      {elementChildren.map((component, index) => (
+      {children.map((component, index) => (
         <Link
           key={`linkSocial-${index}`}
           href={href[index]}

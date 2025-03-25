@@ -1,36 +1,23 @@
 import NextImage from "next/image";
-import { useRef } from "react";
-import ElementProps from "./interfaces/ElementsProps";
 import { Link } from "react-scroll";
 
-interface UlMobileProps extends ElementProps {
-  ulRef?: React.RefObject<HTMLLIElement[]>;
-  activeIndex?: number;
+interface UlMobileProps {
+  activeIndex: number;
+  childrenArr: string[];
+  className: string;
 }
 
 export default function UlNavPc({
-  elementChildren,
+  childrenArr,
   className,
-  ulRef,
   activeIndex,
 }: UlMobileProps) {
-  const liRefs = useRef<HTMLLIElement[]>([]);
-
-  if (ulRef) ulRef.current = liRefs.current;
-
   const isActiveIndex = (index: number) => index === activeIndex;
 
   return (
     <ul className={className}>
-      {elementChildren.map((li, index) => (
-        <li
-          key={`liMobileNav-${index}`}
-          ref={(el) => {
-            if (el) {
-              liRefs.current[index] = el;
-            }
-          }}
-        >
+      {childrenArr.map((li, index) => (
+        <li key={`liMobileNav-${index}`}>
           <Link
             to={
               li === "Projetos"
