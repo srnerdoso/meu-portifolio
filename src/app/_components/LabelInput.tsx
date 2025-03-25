@@ -3,7 +3,7 @@ import ContactmeInputs from "../types/ContactmeInputs";
 import { IoAlertCircleOutline } from "react-icons/io5";
 
 interface LabelInputProps {
-  type: "subject" | "message";
+  type: "subject" | "message" | "name";
   children: string;
   register: UseFormRegister<ContactmeInputs>;
   errors: FieldErrors<ContactmeInputs>;
@@ -22,7 +22,7 @@ export default function LabelInput({
     <div className="flex flex-col w-full gap-2">
       <label className="text-[16px] font-normal flex flex-col gap-1 w-full">
         {children}
-        {type === "subject" ? (
+        {type === "subject" || type === "name" ? (
           <input
             type="text"
             className={defaultInputClassName + " py-1"}

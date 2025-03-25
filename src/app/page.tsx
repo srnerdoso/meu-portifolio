@@ -139,6 +139,9 @@ export default function Home() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <h2 className="uppercase font-medium">Contato</h2>
+            <LabelInput type="name" register={register} errors={errors}>
+              Nome
+            </LabelInput>
             <LabelInput type="subject" register={register} errors={errors}>
               Assunto
             </LabelInput>
