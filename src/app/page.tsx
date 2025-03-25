@@ -13,9 +13,9 @@ import {
 } from "./_data/data";
 import Ul from "./_components/ts/Ul";
 import Span from "./_components/Span";
-
-// Fazer parte de enviar email de contato
-// Abaixo de todo o conteúdo com a possibilidade de scrollar quando chegar na parte inferior
+import LabelInput from "./_components/LabelInput";
+import { useForm, SubmitHandler } from "react-hook-form";
+import ContactmeInputs from "./types/ContactmeInputs";
 
 export default function Home() {
   const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
@@ -27,6 +27,13 @@ export default function Home() {
     containerWidth,
     setContainerWidth,
   } = useStates();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactmeInputs>();
+  const onSubmit: SubmitHandler<ContactmeInputs> = (data) => console.log(data);
 
   useEffects.useVisibilityEffect(
     containerRef,
@@ -42,7 +49,7 @@ export default function Home() {
     <div ref={containerRef} className="m-0 p-0">
       <Ligth containerRef={containerRef} headerRef={headerRef} />
       <div
-        id="container"
+        id="layout"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
       >
         <div
@@ -125,22 +132,41 @@ export default function Home() {
           <Sections.Projects items={projectsItems} />
           <Divider />
           <Sections.Experience items={experienceItems} />
-        </main>
-        <footer
-          ref={footerRef}
-          className={`hidden max-xl:${
-            headerVisible ? "hidden" : "flex"
-          } items-center justify-center h-10 w-full sticky bottom-0`}
-        >
-          <Anchor
-            className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
-            href={socials[1] as string[]}
-            type="footer"
+          <Divider />
+          <form
+            id="contact-me"
+            className="py-[20vh] flex flex-col justify-center items-start gap-5 text-[16px] h-full"
+            onSubmit={handleSubmit(onSubmit)}
           >
-            {socials[0]}
-          </Anchor>
-        </footer>
+            <h2 className="uppercase font-medium">Contato</h2>
+            <LabelInput type="subject" register={register}>
+              Assunto
+            </LabelInput>
+            <LabelInput type="message" register={register}>
+              Mensagem
+            </LabelInput>
+            <input
+              type="submit"
+              value="Enviar"
+              className="h-10 w-full font-normal border-[1px] py-1 px-2 rounded-md hover:bg-white hover:text-background hover:transition hover:ease-in-out hover:duration-100"
+            />
+          </form>
+        </main>
       </div>
+      <footer
+        ref={footerRef}
+        className={`hidden max-xl:${
+          headerVisible ? "hidden" : "flex"
+        } items-center justify-center h-10 w-full sticky bottom-0`}
+      >
+        <Anchor
+          className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
+          href={socials[1] as string[]}
+          type="footer"
+        >
+          {socials[0]}
+        </Anchor>
+      </footer>
     </div>
   );
 }
