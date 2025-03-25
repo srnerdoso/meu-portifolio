@@ -135,7 +135,7 @@ export default function Home() {
           <Divider />
           <form
             id="contact-me"
-            className="py-[20vh] flex flex-col justify-center items-start gap-5 text-[16px] h-full"
+            className="py-[20vh] max-xl:py-[15vh] flex flex-col justify-center items-start gap-5 text-[16px] h-full"
             onSubmit={handleSubmit(onSubmit)}
           >
             <h2 className="uppercase font-medium">Contato</h2>
