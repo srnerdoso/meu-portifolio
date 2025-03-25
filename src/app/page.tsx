@@ -85,11 +85,12 @@ export default function Home() {
               )}
             </nav>
             <Anchor
-              children={socials[0]}
               className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
               href={socials[1] as string[]}
               type="header"
-            />
+            >
+              {socials[0]}
+            </Anchor>
           </header>
         </div>
 
@@ -125,7 +126,6 @@ export default function Home() {
           <Divider />
           <Sections.Experience items={experienceItems} />
         </main>
-
         <footer
           ref={footerRef}
           className={`hidden max-xl:${
@@ -133,11 +133,12 @@ export default function Home() {
           } items-center justify-center h-10 w-full sticky bottom-0`}
         >
           <Anchor
-            children={socials[0]}
             className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
             href={socials[1] as string[]}
             type="footer"
-          />
+          >
+            {socials[0]}
+          </Anchor>
         </footer>
       </div>
     </div>
