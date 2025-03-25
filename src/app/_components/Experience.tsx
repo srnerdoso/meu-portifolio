@@ -1,12 +1,6 @@
-import SectionsProps from "./interfaces/SectionsProps";
-import Paragraph, { ParagraphProps } from "./Paragraph";
-
-export interface ExperienceItem
-  extends Pick<
-    ParagraphProps & SectionsProps,
-    "keyWords" | "boldWords" | "description"
-  > {
+export interface ExperienceItem {
   header: string;
+  children: React.ReactNode;
 }
 
 export default function Experience({ items }: { items: ExperienceItem[] }) {
@@ -18,11 +12,7 @@ export default function Experience({ items }: { items: ExperienceItem[] }) {
       {items.map((item, index) => (
         <div key={`experience-${index}`}>
           <h3 className="uppercase font-medium">{item.header}</h3>
-          <Paragraph
-            paragraphWords={item.description}
-            keyWords={item.keyWords}
-            boldWords={item.boldWords}
-          />
+          {item.children}
         </div>
       ))}
     </section>

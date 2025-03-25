@@ -3,20 +3,39 @@
 import Anchor from "./_components/Anchor";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
-import Paragraph from "./_components/Paragraph";
 import Sections from "./_components/Sections";
 import { useEffects, useRefs, useStates } from "./ts/hooks";
-import { navChildrenArr, experienceItems, projectsItems, socials } from "./data/data";
+import {
+  navChildrenArr,
+  experienceItems,
+  projectsItems,
+  socials,
+} from "./_data/data";
 import Ul from "./_components/ts/Ul";
+import Span from "./_components/Span";
 
 // Fazer parte de enviar email de contato
 // Abaixo de todo o conteúdo com a possibilidade de scrollar quando chegar na parte inferior
 
 export default function Home() {
   const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
-  const { isVisible, setIsVisible, headerVisible, setHeaderVisible, containerWidth, setContainerWidth, } = useStates();
+  const {
+    isVisible,
+    setIsVisible,
+    headerVisible,
+    setHeaderVisible,
+    containerWidth,
+    setContainerWidth,
+  } = useStates();
 
-  useEffects.useVisibilityEffect( containerRef, setContainerWidth, mainRef, setIsVisible, isVisible, ulRef );
+  useEffects.useVisibilityEffect(
+    containerRef,
+    setContainerWidth,
+    mainRef,
+    setIsVisible,
+    isVisible,
+    ulRef
+  );
   useEffects.useHeaderVisibleEffect(headerRef, setHeaderVisible, headerVisible);
 
   return (
@@ -48,7 +67,7 @@ export default function Home() {
             <nav className="relative">
               {containerWidth > 1280 ? (
                 <Ul.Pc
-                  elementChildren={navChildrenArr}
+                  childrenArr={navChildrenArr}
                   className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none"
                   ulRef={ulRef}
                   activeIndex={Object.values(isVisible).findIndex(
@@ -57,7 +76,7 @@ export default function Home() {
                 />
               ) : (
                 <Ul.Mobile
-                  elementChildren={navChildrenArr}
+                  childrenArr={navChildrenArr}
                   className="uppercase font-medium flex flex-row justify-center gap-2 cursor-pointer select-none"
                   activeIndex={Object.values(isVisible).findIndex(
                     (value) => value
@@ -66,11 +85,12 @@ export default function Home() {
               )}
             </nav>
             <Anchor
-              elementChildren={socials[0]}
               className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
               href={socials[1] as string[]}
               type="header"
-            />
+            >
+              {socials[0]}
+            </Anchor>
           </header>
         </div>
 
@@ -90,20 +110,22 @@ export default function Home() {
             className="py-[30vh] flex justify-center items-center max-xl:py-[20vh]"
           >
             <p>
-              <Paragraph
-                paragraphWords="Sou um desenvolvedor em início de carreira, focado em criar soluções funcionais e bem estruturadas. Atualmente, estou desenvolvendo um projeto pessoal que me permite explorar e aplicar habilidades com NextJS, sempre buscando entregar resultados de qualidade. Embora este projeto ainda não esteja público, ele reflete minha dedicação e compromisso em aprender e crescer como profissional. Se você precisa de alguém criativo, detalhista e com vontade de transformar ideias em realidade, estou pronto para começar!"
-                boldWords={["soluções", "funcionais", "bem", "estruturadas."]}
-                keyWords={["NextJS,"]}
-              />
+              Sou um desenvolvedor em início de carreira, focado em criar{" "}
+              <Span>soluções funcionais e bem estruturadas</Span>. Atualmente,
+              estou desenvolvendo um projeto pessoal que me permite explorar e
+              aplicar habilidades com <strong>NextJS</strong>, sempre buscando
+              entregar resultados de qualidade. Embora este projeto ainda não
+              esteja público, ele reflete minha dedicação e compromisso em
+              aprender e crescer como profissional. Se você precisa de alguém
+              criativo, detalhista e com vontade de transformar ideias em
+              realidade, estou pronto para começar!
             </p>
           </section>
-
           <Divider />
           <Sections.Projects items={projectsItems} />
           <Divider />
           <Sections.Experience items={experienceItems} />
         </main>
-
         <footer
           ref={footerRef}
           className={`hidden max-xl:${
@@ -111,11 +133,12 @@ export default function Home() {
           } items-center justify-center h-10 w-full sticky bottom-0`}
         >
           <Anchor
-            elementChildren={socials[0]}
             className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
             href={socials[1] as string[]}
             type="footer"
-          />
+          >
+            {socials[0]}
+          </Anchor>
         </footer>
       </div>
     </div>
