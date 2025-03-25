@@ -55,7 +55,7 @@ export default function Light({ headerRef, containerRef }: LigthProps) {
   }, [headerRef]);
 
   return (
-    <div className="fixed w-full h-full overflow-hidden">
+    <div className="fixed w-full h-full overflow-hidden select-none">
       <NextImage
         src="/images/png/ligth-effect.png"
         alt="ligth-effect"
