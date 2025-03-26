@@ -26,6 +26,8 @@ export default function Home() {
     setHeaderVisible,
     containerWidth,
     setContainerWidth,
+    shouldRender,
+    setShouldRender,
   } = useStates();
 
   useEffects.useVisibilityEffect(
@@ -36,12 +38,28 @@ export default function Home() {
     currentSection,
     ulRef
   );
-
   useEffects.useHeaderVisibleEffect(headerRef, setHeaderVisible, headerVisible);
+  useEffects.useShouldLigth(containerWidth, setShouldRender);
+  useEffects.useBodyScrollLock(containerRef);
 
   return (
     <div ref={containerRef} className="m-0 p-0">
-      <Ligth containerRef={containerRef} headerRef={headerRef} containerWidth={containerWidth} />
+      {!containerRef.current && (
+        <div className="fixed inset-0 w-screen z-50 flex items-center justify-center bg-background space-x-2">
+          <div className="h-3 w-3 bg-blue-600 rounded-full animate-bounce"></div>
+          <div className="h-3 w-3 bg-blue-600 rounded-full animate-bounce delay-100"></div>
+          <div className="h-3 w-3 bg-blue-600 rounded-full animate-bounce delay-200"></div>
+        </div>
+      )}
+
+      {shouldRender && (
+        <Ligth
+          containerRef={containerRef}
+          headerRef={headerRef}
+          containerWidth={containerWidth}
+        />
+      )}
+
       <div
         id="layout"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"

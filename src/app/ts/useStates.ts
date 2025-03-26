@@ -6,6 +6,7 @@ export default function useStates() {
   >({ about: true, projects: false, experience: false });
   const [headerVisible, setHeaderVisible] = useState(true);
   const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [shouldRender, setShouldRender] = useState(true);
 
   return {
     currentSection,
@@ -14,5 +15,7 @@ export default function useStates() {
     setHeaderVisible,
     containerWidth,
     setContainerWidth,
+    shouldRender,
+    setShouldRender,
   };
 }

@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface LightProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -7,24 +7,18 @@ interface LightProps {
   containerWidth: number;
 }
 
-export default function Light({ headerRef, containerRef, containerWidth }: LightProps) {
+export default function Light({
+  headerRef,
+  containerRef,
+  containerWidth,
+}: LightProps) {
   const lightRef = useRef<HTMLImageElement>(null);
   const target = useRef({ x: 300, y: 300 });
   const pos = useRef({ x: 0, y: 0 });
-  const [shouldRender, setShouldRender] = useState(true);
 
   useEffect(() => {
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
-        (containerWidth < 1024 && navigator.maxTouchPoints > 0)) {
-      setShouldRender(false);
-      return;
-    }
-
     const { current } = containerRef;
-    if (!current || !headerRef.current) {
-      setShouldRender(false);
-      return;
-    }
+    if (headerRef.current === null || current === null) return;
 
     const rect = headerRef.current.getBoundingClientRect();
     target.current.x = rect.width / 2;
@@ -63,8 +57,6 @@ export default function Light({ headerRef, containerRef, containerWidth }: Light
       current.removeEventListener("mousemove", handleMouseMove);
     };
   }, [headerRef, containerRef, containerWidth]);
-
-  if (!shouldRender) return null;
 
   return (
     <div className="fixed w-full h-full overflow-hidden select-none">
