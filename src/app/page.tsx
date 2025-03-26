@@ -61,7 +61,7 @@ export default function Home() {
         </div>
         <main
           ref={mainRef}
-          className="flex flex-col px-[93px] text-justify text-xs max-xl:px-10"
+          className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10"
         >
           <About items={aboutItems} />
           <Divider />

@@ -19,6 +19,9 @@ export default function LabelInput({
           <input
             type="text"
             className={defaultInputClassName + " py-1"}
+            style={{
+              borderColor: errors ? "#9B111E" : "",
+            }}
             {...register(type, { required: true })}
           />
         );
@@ -29,6 +32,9 @@ export default function LabelInput({
             type="text"
             className={defaultInputClassName + " py-1"}
             {...register(type, { required: true })}
+            style={{
+              borderColor: errors ? "#9B111E" : "",
+            }}
           />
         );
 
@@ -38,6 +44,9 @@ export default function LabelInput({
             type="text"
             className={defaultInputClassName + " py-1"}
             {...register(type, { required: true })}
+            style={{
+              borderColor: errors ? "#9B111E" : "",
+            }}
           />
         );
       case "message":
@@ -45,6 +54,9 @@ export default function LabelInput({
           <textarea
             className={defaultInputClassName + " resize-none min-h-[30vh] py-3"}
             {...register(type, { required: true })}
+            style={{
+              borderColor: errors ? "#9B111E" : "",
+            }}
           />
         );
     }
