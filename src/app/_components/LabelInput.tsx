@@ -1,5 +1,5 @@
 import { LabelInputProps } from "../types/ContactmeInputs";
-import { IoAlertCircleOutline } from "react-icons/io5";
+import Error from "./Error";
 
 export default function LabelInput({
   type,
@@ -56,11 +56,7 @@ export default function LabelInput({
         {children}
         {input()}
       </label>
-      {errors?.[type] && (
-        <span className="text-red-500 flex gap-1">
-          <IoAlertCircleOutline /> Este campo é obrigatorio
-        </span>
-      )}
+      {errors?.[type] && <Error message="Este campo é obrigatorio" />}
     </div>
   );
 }
