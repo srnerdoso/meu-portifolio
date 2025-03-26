@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="m-0 p-0">
-      <Ligth containerRef={containerRef} headerRef={headerRef} />
+      <Ligth containerRef={containerRef} headerRef={headerRef} containerWidth={containerWidth} />
       <div
         id="layout"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
