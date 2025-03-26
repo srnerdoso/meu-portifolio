@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import ProjectLinkComponent from "./ProjectLinkComponent";
+import ProjectLinkComponent from "./projects-components/ProjectLinkComponent";
 import { HiOutlineExternalLink } from "react-icons/hi";
 
 export interface ProjectProps {
