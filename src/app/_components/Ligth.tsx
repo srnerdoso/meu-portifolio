@@ -32,7 +32,6 @@ export default function Light({ headerRef, containerRef }: LigthProps) {
     };
 
     current.addEventListener("mousemove", handleMouseMove, { passive: true });
-    current.addEventListener("touchmove", handleMouseMove, { passive: true });
 
     let animationFrameId: number;
 
@@ -53,9 +52,15 @@ export default function Light({ headerRef, containerRef }: LigthProps) {
     return () => {
       cancelAnimationFrame(animationFrameId);
       current.removeEventListener("mousemove", handleMouseMove);
-      current.removeEventListener("touchmove", handleMouseMove);
     };
   }, [headerRef]);
+
+  if (
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+    (window.matchMedia("(max-width: 768px)").matches &&
+      navigator.maxTouchPoints > 0)
+  )
+    return null;
 
   return (
     <div className="fixed w-full h-full overflow-hidden select-none">
