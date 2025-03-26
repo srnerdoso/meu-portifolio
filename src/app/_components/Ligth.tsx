@@ -13,7 +13,7 @@ export default function Light({ headerRef, containerRef }: LigthProps) {
 
   useEffect(() => {
     const { current } = containerRef;
-    
+
     if (!current) return;
     if (!headerRef.current) return;
 
@@ -22,17 +22,19 @@ export default function Light({ headerRef, containerRef }: LigthProps) {
     target.current.y = rect.height / 2;
 
     const handleMouseMove = (e: MouseEvent | TouchEvent) => {
-      if (e instanceof TouchEvent) {
+      if ("touches" in e && e.touches.length > 0) {
         target.current.x = e.touches[0].clientX;
         target.current.y = e.touches[0].clientY;
-      } else {
+      } else if ("clientX" in e) {
         target.current.x = e.clientX;
         target.current.y = e.clientY;
       }
     };
 
-    current.addEventListener("mousemove", handleMouseMove);
-    current.addEventListener("touchmove", handleMouseMove);
+    current.addEventListener("mousemove", handleMouseMove, { passive: true });
+    current.addEventListener("touchmove", handleMouseMove, { passive: true });
+
+    let animationFrameId: number;
 
     const updatePosition = () => {
       pos.current.x += (target.current.x - pos.current.x) * 0.1;
@@ -43,12 +45,13 @@ export default function Light({ headerRef, containerRef }: LigthProps) {
         lightRef.current.style.top = `${pos.current.y}px`;
       }
 
-      requestAnimationFrame(updatePosition);
+      animationFrameId = requestAnimationFrame(updatePosition);
     };
 
-    requestAnimationFrame(updatePosition);
+    animationFrameId = requestAnimationFrame(updatePosition);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       current.removeEventListener("mousemove", handleMouseMove);
       current.removeEventListener("touchmove", handleMouseMove);
     };
