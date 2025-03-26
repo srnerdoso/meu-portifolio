@@ -16,10 +16,6 @@ export default {
         mainTextColor: "var(--mainTextColor)",
         footerBackground: "var(--footerBackground)",
       },
-      fontFamily: {
-        fontFamily: "var(--fontFamily)",
-        mono: "var(--fontMono)",
-      },
     },
   },
   plugins: [],
