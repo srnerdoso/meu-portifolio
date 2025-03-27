@@ -4,7 +4,7 @@ import Anchor from "./_components/Anchor";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
 import Sections from "./_components/sections/Sections";
-import { Effect, useRefs, useStates } from "./ts/hooks";
+import Effect from "./ts/Effect";
 import {
   navChildrenArr,
   experienceItems,
@@ -17,20 +17,12 @@ import About from "./_components/sections/About";
 import { aboutItems } from "./_data/sectionsData";
 import { useInView } from "react-intersection-observer";
 import HeaderMobile from "./_components/layout/header/HeaderMobile";
+import { useRef, useState } from "react";
 
 export default function Home() {
-  const { containerRef, mainRef, ulRef, footerRef } = useRefs();
-
-  const {
-    currentSection,
-    setCurrentSection,
-    headerVisible,
-    setHeaderVisible,
-    containerWidth,
-    setContainerWidth,
-    shouldRender,
-    setShouldRender,
-  } = useStates();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [shouldRender, setShouldRender] = useState(true);
 
   Effect.useShouldLigth(containerWidth, setShouldRender);
   Effect.useBodyScrollLock(containerRef);
@@ -66,13 +58,7 @@ export default function Home() {
           <div className="h-3 w-3 bg-blue-600 rounded-full animate-bounce delay-200"></div>
         </div>
       )}
-
-      {
-        // está renderizando apenas uma vez. Se a viewport for atualizada ele não é renderizado novamente
-      }
-
       {shouldRender && <Ligth containerRef={containerRef} />}
-
       <div
         id="layout"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
@@ -99,10 +85,7 @@ export default function Home() {
         >
           <hr className="w-[1px] h-[80vh] bg-white border-none" />
         </div>
-        <main
-          ref={mainRef}
-          className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10"
-        >
+        <main className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10">
           <About items={aboutItems} ref={aboutRef} />
           <Divider />
           <Sections.Projects items={projectsItems} ref={projectsRef} />
@@ -113,10 +96,7 @@ export default function Home() {
         </main>
       </div>
       {!shouldRender && !headerInView && (
-        <footer
-          ref={footerRef}
-          className="flex items-center justify-center w-full fixed bottom-0 py-[10px]"
-        >
+        <footer className="flex items-center justify-center w-full fixed bottom-0 py-[10px]">
           <Anchor
             className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
             href={socials[1] as string[]}

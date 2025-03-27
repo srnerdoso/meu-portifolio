@@ -1,11 +1,9 @@
 import NextImage from "next/image";
-import { useEffect } from "react";
 import { Link } from "react-scroll";
 
 interface UlMobileProps {
   activeSectionId: string;
   childrenArr: string[];
-  type: "about";
 }
 
 export default function UlNavMobile({

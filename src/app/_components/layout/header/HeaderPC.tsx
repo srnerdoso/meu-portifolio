@@ -23,7 +23,6 @@ export default function Header({
         <nav className="relative">
           <Ul.Pc
             childrenArr={navChildrenArr}
-            className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none"
             activeSectionId={getCurrentEntryId(entryes) as string}
           />
         </nav>

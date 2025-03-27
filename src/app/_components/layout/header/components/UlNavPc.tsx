@@ -5,16 +5,11 @@ import getCurrentIndex from "../utils/getCurrentIndex";
 interface UlPcProps {
   activeSectionId: string;
   childrenArr: string[];
-  className: string;
 }
 
-export default function UlNavPc({
-  childrenArr,
-  className,
-  activeSectionId,
-}: UlPcProps) {
+export default function UlNavPc({ childrenArr, activeSectionId }: UlPcProps) {
   return (
-    <ul className={className}>
+    <ul className="uppercase font-medium flex flex-col gap-5 cursor-pointer select-none">
       {childrenArr.map((li, index) => (
         <li
           key={`liPcNav-${index}`}

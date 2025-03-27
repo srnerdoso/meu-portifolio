@@ -1,4 +1,3 @@
-import { useInView } from "react-intersection-observer";
 import Anchor from "../../Anchor";
 import Ul from "./components/export";
 import HeaderProps from "./props";
@@ -34,8 +33,8 @@ export default function Header({
           id="title"
           className="px-[50px] flex flex-col items-center justify-center gap-5 leading-none"
         >
-          <h1 className="text-[64px] text-center font-semibold">Valdenor</h1>
-          <p className="text-[16px] text-center font-medium ">
+          <h1 className="text-[3.5em] text-center font-semibold">Valdenor</h1>
+          <p className="text-[0.8em] text-center font-medium ">
             Front End com experiência crescente e foco em resultados
           </p>
         </div>
@@ -60,7 +59,6 @@ export default function Header({
         }}
       >
         <Ul.Mobile
-          type="about"
           childrenArr={navChildrenArr}
           activeSectionId={getCurrentEntryId(entryes) as string}
         />
