@@ -1,3 +1,4 @@
+import { useInView } from "react-intersection-observer";
 import Anchor from "../../Anchor";
 import Ul from "./components/export";
 import HeaderProps from "./props";
@@ -5,6 +6,8 @@ import getCurrentEntryId from "./utils/getCurrentEntryId";
 
 interface HeaderMobileProps extends HeaderProps {
   containerWidth: number;
+  ref: (node?: Element | null) => void;
+  inView: boolean;
 }
 
 export default function Header({
@@ -12,10 +15,13 @@ export default function Header({
   entryes,
   socials,
   containerWidth,
+  ref,
+  inView,
 }: HeaderMobileProps) {
   return (
     <header
-      className="flex flex-col items-center justify-center w-full shadow-xl"
+      ref={ref}
+      className="flex flex-col items-center justify-center w-full"
       style={{
         height: `${containerWidth}px`,
       }}
@@ -41,7 +47,18 @@ export default function Header({
           {socials[0]}
         </Anchor>
       </div>
-      <nav>
+      <nav
+        className="bg-background w-full flex items-center justify-center shadow-xl z-50"
+        style={{
+          paddingBottom: !inView ? "10px" : "20px",
+          paddingTop: !inView ? "10px" : 0,
+          position: !inView ? "fixed" : "static",
+          top: !inView ? "0" : "auto",
+          transition: "ease-in-out",
+          transform: "translateY(0)",
+          transitionDuration: "0.05s",
+        }}
+      >
         <Ul.Mobile
           type="about"
           childrenArr={navChildrenArr}

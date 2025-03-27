@@ -43,7 +43,7 @@ export default function ContactForm({
     <form
       id="contact-me"
       ref={ref}
-      className="max-xl:py-[15vh] flex flex-col justify-center items-start gap-5 text-[16px] h-screen"
+      className="flex flex-col justify-center items-start gap-5 text-[16px] h-screen pt-[53px] pb-[106px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2 className="uppercase font-medium">Contato</h2>

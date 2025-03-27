@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export default function useHeaderVisibleEffect(
+export default function useHeaderVisible(
   headerRef: React.RefObject<HTMLHeadElement | null>,
   setHeaderVisible: (value: React.SetStateAction<boolean>) => void,
   headerVisible: boolean

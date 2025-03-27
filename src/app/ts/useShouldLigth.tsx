@@ -14,5 +14,5 @@ export default function useShouldLigth(
       setShouldRender(false);
       return;
     }
-  }, [containerWidth]);
+  }, []);
 }

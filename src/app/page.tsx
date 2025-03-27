@@ -4,7 +4,7 @@ import Anchor from "./_components/Anchor";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
 import Sections from "./_components/sections/Sections";
-import { useEffects, useRefs, useStates } from "./ts/hooks";
+import { Effect, useRefs, useStates } from "./ts/hooks";
 import {
   navChildrenArr,
   experienceItems,
@@ -17,10 +17,9 @@ import About from "./_components/sections/About";
 import { aboutItems } from "./_data/sectionsData";
 import { useInView } from "react-intersection-observer";
 import HeaderMobile from "./_components/layout/header/HeaderMobile";
-import { useEffect } from "react";
 
 export default function Home() {
-  const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
+  const { containerRef, mainRef, ulRef, footerRef } = useRefs();
 
   const {
     currentSection,
@@ -33,9 +32,13 @@ export default function Home() {
     setShouldRender,
   } = useStates();
 
-  useEffects.useShouldLigth(containerWidth, setShouldRender);
-  useEffects.useBodyScrollLock(containerRef);
+  Effect.useShouldLigth(containerWidth, setShouldRender);
+  Effect.useBodyScrollLock(containerRef);
+  Effect.useGetWidth(containerRef, setContainerWidth);
 
+  const { ref: headerRef, inView: headerInView } = useInView({
+    threshold: 0.05,
+  });
   const { ref: aboutRef, entry: aboutEntry } = useInView({ threshold: 0.1 });
   const { ref: projectsRef, entry: projectsEntry } = useInView({
     threshold: 0.1,
@@ -54,10 +57,6 @@ export default function Home() {
     contactEntry,
   ];
 
-  useEffect(() => {
-    setContainerWidth(containerRef.current?.offsetWidth as number);
-  }, [containerRef])
-
   return (
     <div ref={containerRef} className="m-0 p-0">
       {!containerRef.current && (
@@ -68,13 +67,11 @@ export default function Home() {
         </div>
       )}
 
-      {shouldRender && (
-        <Ligth
-          containerRef={containerRef}
-          headerRef={headerRef}
-          containerWidth={containerWidth}
-        />
-      )}
+      {
+        // está renderizando apenas uma vez. Se a viewport for atualizada ele não é renderizado novamente
+      }
+
+      {shouldRender && <Ligth containerRef={containerRef} />}
 
       <div
         id="layout"
@@ -92,6 +89,8 @@ export default function Home() {
             entryes={obsverEntryes}
             navChildrenArr={navChildrenArr}
             socials={socials}
+            ref={headerRef}
+            inView={headerInView}
           />
         )}
         <div
@@ -113,20 +112,20 @@ export default function Home() {
           <ContactForm ref={contactRef} />
         </main>
       </div>
-      <footer
-        ref={footerRef}
-        className={`hidden max-xl:${
-          headerVisible ? "hidden" : "flex"
-        } items-center justify-center h-10 w-full sticky bottom-0`}
-      >
-        <Anchor
-          className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
-          href={socials[1] as string[]}
-          type="other"
+      {!shouldRender && !headerInView && (
+        <footer
+          ref={footerRef}
+          className="flex items-center justify-center w-full fixed bottom-0 py-[10px]"
         >
-          {socials[0]}
-        </Anchor>
-      </footer>
+          <Anchor
+            className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
+            href={socials[1] as string[]}
+            type="other"
+          >
+            {socials[0]}
+          </Anchor>
+        </footer>
+      )}
     </div>
   );
 }

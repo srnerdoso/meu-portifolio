@@ -3,38 +3,22 @@ import { useEffect, useRef } from "react";
 
 interface LightProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
-  headerRef: React.RefObject<HTMLHeadElement | null>;
-  containerWidth: number;
 }
 
-export default function Light({
-  headerRef,
-  containerRef,
-  containerWidth,
-}: LightProps) {
+export default function Light({ containerRef }: LightProps) {
   const lightRef = useRef<HTMLImageElement>(null);
   const target = useRef({ x: 300, y: 300 });
   const pos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const { current } = containerRef;
-    if (headerRef.current === null || current === null) return;
-
-    const rect = headerRef.current.getBoundingClientRect();
-    target.current.x = rect.width / 2;
-    target.current.y = rect.height / 2;
-
-    const handleMouseMove = (e: MouseEvent | TouchEvent) => {
-      if ("touches" in e && e.touches.length > 0) {
-        target.current.x = e.touches[0].clientX;
-        target.current.y = e.touches[0].clientY;
-      } else if ("clientX" in e) {
-        target.current.x = e.clientX;
-        target.current.y = e.clientY;
-      }
+    const handleMouseMove = (ev: MouseEvent) => {
+      target.current.x = ev.clientX;
+      target.current.y = ev.clientY;
     };
 
-    current.addEventListener("mousemove", handleMouseMove, { passive: true });
+    containerRef.current?.addEventListener("mousemove", handleMouseMove, {
+      passive: true,
+    });
 
     let animationFrameId: number;
 
@@ -54,9 +38,9 @@ export default function Light({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      current.removeEventListener("mousemove", handleMouseMove);
+      containerRef.current?.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [headerRef, containerRef, containerWidth]);
+  }, []);
 
   return (
     <div className="fixed w-full h-full overflow-hidden select-none">

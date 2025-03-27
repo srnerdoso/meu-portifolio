@@ -1,5 +1,5 @@
-import useEffects from "./useEffects";
+import Effect from "./Effect";
 import useRefs from "./useRefs";
 import useStates from "./useStates";
 
-export { useEffects, useRefs, useStates };
+export { Effect, useRefs, useStates };
