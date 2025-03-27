@@ -2,68 +2,75 @@ import NextImage from "next/image";
 import { Link } from "react-scroll";
 
 interface UlMobileProps {
-  activeIndex: number;
+  activeSectionId: string;
   childrenArr: string[];
-  className: string;
+  type: "about";
 }
 
-export default function UlNavPc({
+export default function UlNavMobile({
   childrenArr,
-  className,
-  activeIndex,
+  activeSectionId,
 }: UlMobileProps) {
-  const isActiveIndex = (index: number) => index === activeIndex;
+  const ContainerLine = ({
+    children,
+    childrenId,
+  }: {
+    children: string;
+    childrenId: string;
+  }) => {
+    const Line = () => (
+      <NextImage
+        alt="line"
+        width={1}
+        height={200}
+        src={`/images/svg/line-nav.svg`}
+        priority
+        className="w-auto h-auto"
+      />
+    );
+
+    const IsProjects = childrenId === "projects";
+
+    return (
+      <li className="flex gap-[10px] mb-5" style={{
+        marginLeft: IsProjects ? "10px" : "",
+        marginRight: IsProjects ? "10px" : "",
+      }}>
+        {!IsProjects && <Line />}
+        <Link
+          to={childrenId}
+          smooth={true}
+          duration={500}
+          className="text-white flex scroll-smooth cursor-pointer"
+          style={{
+            opacity: activeSectionId === "about" ? 1 : 0.5,
+          }}
+        >
+          {children}
+        </Link>
+        {!IsProjects && <Line />}
+      </li>
+    );
+  };
 
   return (
-    <ul className={className}>
-      {childrenArr.map((li, index) => (
-        <li key={`liMobileNav-${index}`}>
-          <Link
-            to={
-              li === "Projetos"
-                ? "projects"
-                : li === "Sobre"
-                ? "about"
-                : li === "Experiência"
-                ? "experience"
-                : ""
-            }
-            smooth={true}
-            duration={500}
-            className="text-white flex gap-2 scroll-smooth items-center hover:no-underline"
-          >
-            {li !== "Projetos" && (
-              <NextImage
-                alt="line"
-                width={100}
-                height={1}
-                src={`/images/svg/line-nav.svg`}
-                priority
-                className="w-auto h-auto opacity-100"
-              />
-            )}
-            <div
-              className={`flex items-center ${
-                isActiveIndex(index)
-                  ? "transition-opacity opacity-100 ease-in-out"
-                  : "transition-opacity opacity-50 ease-in-out"
-              }`}
-            >
-              {li}
-            </div>
-            {li !== "Projetos" && (
-              <NextImage
-                alt="line"
-                width={200}
-                height={2}
-                src={`/images/svg/line-nav.svg`}
-                priority
-                className="w-auto h-auto opacity-100"
-              />
-            )}
-          </Link>
-        </li>
-      ))}
+    <ul className="uppercase font-medium flex select-none">
+      {childrenArr.map((children, index) => {
+        switch (children) {
+          case "Sobre":
+            return <ContainerLine childrenId="about">{children}</ContainerLine>;
+          case "Projetos":
+            return (
+              <ContainerLine childrenId="projects">Projetos</ContainerLine>
+            );
+          case "Experiência":
+            return (
+              <ContainerLine childrenId="experience">Experiência</ContainerLine>
+            );
+          default:
+            return;
+        }
+      })}
     </ul>
   );
 }

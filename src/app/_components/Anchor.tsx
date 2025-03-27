@@ -1,7 +1,7 @@
 import Link from "next/link";
 interface AnchorProps {
   href: string[];
-  type: "footer" | "header";
+  type: "other" | "header-pc";
   children: React.ReactNode[];
   className: string;
 }
@@ -15,9 +15,10 @@ export default function Anchor({
   return (
     <div
       id="social"
-      className="relative top-8 w-full flex flex-row gap-5 justify-center"
+      className="flex w-fit justify-center items-center gap-5"
       style={{
-        top: type === "header" ? "8" : "auto",
+        position: type === "header-pc" ? "relative" : "static",
+        top: type === "header-pc" ? "8" : "auto",
       }}
     >
       {children.map((component, index) => (

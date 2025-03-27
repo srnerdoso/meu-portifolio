@@ -7,7 +7,11 @@ import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import Error from "./Error";
 
-export default function ContactForm() {
+export default function ContactForm({
+  ref,
+}: {
+  ref: (node?: Element | null) => void;
+}) {
   const [btnValue, setBtnValue] = useState<
     "Enviar" | "Enviando..." | "Enviado!" | "Erro"
   >("Enviar");
@@ -38,6 +42,7 @@ export default function ContactForm() {
   return (
     <form
       id="contact-me"
+      ref={ref}
       className="max-xl:py-[15vh] flex flex-col justify-center items-start gap-5 text-[16px] h-screen"
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -66,7 +71,11 @@ export default function ContactForm() {
         type="submit"
         value={btnValue}
         className="h-10 w-full font-normal border-[1px] py-1 px-2 rounded-md hover:text-background hover:transition hover:ease-in-out hover:duration-100 hover:bg-white hover:cursor-pointer disabled:hover:text-inherit disabled:hover:bg-inherit disabled:cursor-default"
-        disabled={btnValue === "Enviando..." || btnValue === "Enviado!" || btnValue === "Erro"}
+        disabled={
+          btnValue === "Enviando..." ||
+          btnValue === "Enviado!" ||
+          btnValue === "Erro"
+        }
         style={{
           borderColor:
             btnValue === "Erro"

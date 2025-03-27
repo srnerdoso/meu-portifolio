@@ -9,11 +9,18 @@ export interface ProjectProps {
   url: string;
 }
 
-export default function Projects({ items }: { items: ProjectProps[] }) {
+export default function Projects({
+  items,
+  ref,
+}: {
+  items: ProjectProps[];
+  ref: (node?: Element | null) => void;
+}) {
   return (
     <section
       id="projects"
-      className="flex justify-center items-center py-[30vh] font-medium flex-col gap-10"
+      ref={ref}
+      className="flex justify-center items-center h-screen font-medium flex-col gap-10"
     >
       {items.map(({ name, title, children, url }, index) => (
         <div

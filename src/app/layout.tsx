@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${fontPoppins.className} antialiased overflow-hidden`}>{children}</body>
+      <body className={`${fontPoppins.className} antialiased`}>{children}</body>
     </html>
   );
 }
+
+// overflow-hidden

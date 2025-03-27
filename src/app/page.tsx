@@ -12,9 +12,12 @@ import {
   socials,
 } from "./_data/data";
 import ContactForm from "./_components/ContactForm";
-import Header from "./_components/layout/header/Header";
+import HeaderPC from "./_components/layout/header/HeaderPC";
 import About from "./_components/sections/About";
 import { aboutItems } from "./_data/sectionsData";
+import { useInView } from "react-intersection-observer";
+import HeaderMobile from "./_components/layout/header/HeaderMobile";
+import { useEffect } from "react";
 
 export default function Home() {
   const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
@@ -30,17 +33,30 @@ export default function Home() {
     setShouldRender,
   } = useStates();
 
-  useEffects.useVisibilityEffect(
-    containerRef,
-    setContainerWidth,
-    mainRef,
-    setCurrentSection,
-    currentSection,
-    ulRef
-  );
-  useEffects.useHeaderVisibleEffect(headerRef, setHeaderVisible, headerVisible);
   useEffects.useShouldLigth(containerWidth, setShouldRender);
   useEffects.useBodyScrollLock(containerRef);
+
+  const { ref: aboutRef, entry: aboutEntry } = useInView({ threshold: 0.1 });
+  const { ref: projectsRef, entry: projectsEntry } = useInView({
+    threshold: 0.1,
+  });
+  const { ref: experienceRef, entry: experienceEntry } = useInView({
+    threshold: 0.1,
+  });
+  const { ref: contactRef, entry: contactEntry } = useInView({
+    threshold: 0.1,
+  });
+
+  const obsverEntryes = [
+    aboutEntry,
+    projectsEntry,
+    experienceEntry,
+    contactEntry,
+  ];
+
+  useEffect(() => {
+    setContainerWidth(containerRef.current?.offsetWidth as number);
+  }, [containerRef])
 
   return (
     <div ref={containerRef} className="m-0 p-0">
@@ -64,13 +80,20 @@ export default function Home() {
         id="layout"
         className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
       >
-        <Header
-          headerRef={headerRef}
-          containerWidth={containerWidth}
-          navChildrenArr={navChildrenArr}
-          ulRef={ulRef}
-          currentSection={currentSection}
-        />
+        {containerWidth > 1024 ? (
+          <HeaderPC
+            entryes={obsverEntryes}
+            navChildrenArr={navChildrenArr}
+            socials={socials}
+          />
+        ) : (
+          <HeaderMobile
+            containerWidth={containerWidth}
+            entryes={obsverEntryes}
+            navChildrenArr={navChildrenArr}
+            socials={socials}
+          />
+        )}
         <div
           id="line"
           className="sticky top-0 flex justify-center items-center h-screen max-xl:hidden"
@@ -81,13 +104,13 @@ export default function Home() {
           ref={mainRef}
           className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10"
         >
-          <About items={aboutItems} />
+          <About items={aboutItems} ref={aboutRef} />
           <Divider />
-          <Sections.Projects items={projectsItems} />
+          <Sections.Projects items={projectsItems} ref={projectsRef} />
           <Divider />
-          <Sections.Experience items={experienceItems} />
+          <Sections.Experience items={experienceItems} ref={experienceRef} />
           <Divider />
-          <ContactForm />
+          <ContactForm ref={contactRef} />
         </main>
       </div>
       <footer
@@ -99,7 +122,7 @@ export default function Home() {
         <Anchor
           className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
           href={socials[1] as string[]}
-          type="footer"
+          type="other"
         >
           {socials[0]}
         </Anchor>

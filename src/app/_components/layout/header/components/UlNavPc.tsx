@@ -1,10 +1,9 @@
 import NextImage from "next/image";
-import { useRef } from "react";
 import { Link } from "react-scroll";
+import getCurrentIndex from "../utils/getCurrentIndex";
 
 interface UlPcProps {
-  ulRef: React.RefObject<HTMLLIElement[]>;
-  activeIndex: number;
+  activeSectionId: string;
   childrenArr: string[];
   className: string;
 }
@@ -12,23 +11,20 @@ interface UlPcProps {
 export default function UlNavPc({
   childrenArr,
   className,
-  ulRef,
-  activeIndex,
+  activeSectionId,
 }: UlPcProps) {
-  const liRefs = useRef<HTMLLIElement[]>([]);
-
-  if (ulRef) ulRef.current = liRefs.current;
-
   return (
     <ul className={className}>
       {childrenArr.map((li, index) => (
         <li
-          ref={(el) => {
-            if (el) liRefs.current[index] = el;
-          }}
           key={`liPcNav-${index}`}
           style={{
-            transform: index === activeIndex ? "translateX(2.6rem)" : "",
+            transform: getCurrentIndex(
+              li,
+              "translateX(2.6rem)",
+              "",
+              activeSectionId
+            ) as string,
             transition: "transform 500ms ease-in-out",
           }}
         >
@@ -45,20 +41,30 @@ export default function UlNavPc({
             smooth={true}
             duration={500}
             className="text-white flex gap-5 scroll-smooth"
+            style={{
+              opacity: getCurrentIndex(
+                li,
+                "100%",
+                "50%",
+                activeSectionId
+              ) as string,
+            }}
           >
             <NextImage
               key={`imgLine-${index}`}
               alt="line"
-              width={index === activeIndex ? 200 : 100}
-              height={index === activeIndex ? 2 : 1}
+              width={getCurrentIndex(li, 200, 100, activeSectionId) as number}
+              height={getCurrentIndex(li, 2, 1, activeSectionId) as number}
               src={`/images/svg/line1.svg`}
               priority
               className="w-auto h-auto"
               style={{
-                transform:
-                  index === activeIndex
-                    ? "scaleX(2) scaleY(2) translateX(-0.7rem)"
-                    : "scaleX(1)",
+                transform: getCurrentIndex(
+                  li,
+                  "scaleX(2) scaleY(2) translateX(-0.7rem)",
+                  "scaleX(1)",
+                  activeSectionId
+                ) as string,
                 transition: "transform 500ms ease-in-out",
               }}
             />

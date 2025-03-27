@@ -3,11 +3,18 @@ export interface ExperienceItem {
   children: React.ReactNode;
 }
 
-export default function Experience({ items }: { items: ExperienceItem[] }) {
+export default function Experience({
+  items,
+  ref,
+}: {
+  items: ExperienceItem[];
+  ref: (node?: Element | null) => void;
+}) {
   return (
     <section
       id="experience"
-      className="flex flex-col justify-center items-center py-[30vh] gap-40 max-xl:py-[20vh]"
+      ref={ref}
+      className="flex flex-col justify-center items-center h-screen gap-40 max-xl:py-[20vh]"
     >
       {items.map((item, index) => (
         <div key={`experience-${index}`}>
