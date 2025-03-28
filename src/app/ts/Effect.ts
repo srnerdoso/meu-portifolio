@@ -1,10 +1,10 @@
 import useShouldLigth from "./useShouldLigth";
 import { useBodyScrollLock } from "./useBodyScrollLock";
-import useGetWidth from "./useGetWidth";
+import useUpdateStates from "./useUpdateStates";
 
 const useEffects = {
   useShouldLigth,
   useBodyScrollLock,
-  useGetWidth,
+  useUpdateStates,
 };
 export default useEffects;

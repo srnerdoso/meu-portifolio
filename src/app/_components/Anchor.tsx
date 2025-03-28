@@ -18,7 +18,7 @@ export default function Anchor({
       className="flex w-fit justify-center items-center gap-5"
       style={{
         position: type === "header-pc" ? "relative" : "static",
-        top: type === "header-pc" ? "8" : "auto",
+        top: type === "header-pc" ? "8" : "",
       }}
     >
       {children.map((component, index) => (

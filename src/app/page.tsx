@@ -22,11 +22,28 @@ import { useRef, useState } from "react";
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
   const [shouldRender, setShouldRender] = useState(true);
+  const [orientation, setOrientation] = useState<OrientationType>();
+
+  const isPortrait = (whenTrue: string, whenFalse: string) => {
+    return orientation === "portrait-primary" ? whenTrue : whenFalse;
+  };
+
+  const sectionsHeight: React.CSSProperties = {
+    height: isPortrait("100vh", ""),
+    paddingTop: isPortrait("", "20vh"),
+    paddingBottom: isPortrait("", "20vh"),
+  };
 
   Effect.useShouldLigth(containerWidth, setShouldRender);
   Effect.useBodyScrollLock(containerRef);
-  Effect.useGetWidth(containerRef, setContainerWidth);
+  Effect.useUpdateStates(
+    containerRef,
+    setContainerWidth,
+    setContainerHeight,
+    setOrientation
+  );
 
   const { ref: headerRef, inView: headerInView } = useInView({
     threshold: 0.05,
@@ -58,12 +75,14 @@ export default function Home() {
           <div className="h-3 w-3 bg-blue-600 rounded-full animate-bounce delay-200"></div>
         </div>
       )}
+
       {shouldRender && <Ligth containerRef={containerRef} />}
+
       <div
         id="layout"
-        className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
+        className="flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
       >
-        {containerWidth > 1024 ? (
+        {containerWidth > 1280 ? (
           <HeaderPC
             entryes={obsverEntryes}
             navChildrenArr={navChildrenArr}
@@ -71,32 +90,48 @@ export default function Home() {
           />
         ) : (
           <HeaderMobile
-            containerWidth={containerWidth}
             entryes={obsverEntryes}
             navChildrenArr={navChildrenArr}
             socials={socials}
             ref={headerRef}
             inView={headerInView}
+            isPortrait={isPortrait}
           />
         )}
-        <div
-          id="line"
-          className="sticky top-0 flex justify-center items-center h-screen max-xl:hidden"
-        >
-          <hr className="w-[1px] h-[80vh] bg-white border-none" />
-        </div>
+
+        {shouldRender && (
+          <div
+            id="line"
+            className="sticky top-0 flex justify-center items-center h-screen"
+          >
+            <hr className="w-[1px] h-[80vh] bg-white border-none" />
+          </div>
+        )}
+
         <main className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10">
-          <About items={aboutItems} ref={aboutRef} />
+          <About
+            items={aboutItems}
+            ref={aboutRef}
+            sectionsHeight={sectionsHeight}
+          />
           <Divider />
-          <Sections.Projects items={projectsItems} ref={projectsRef} />
+          <Sections.Projects
+            items={projectsItems}
+            ref={projectsRef}
+            sectionsHeight={sectionsHeight}
+          />
           <Divider />
-          <Sections.Experience items={experienceItems} ref={experienceRef} />
+          <Sections.Experience
+            items={experienceItems}
+            ref={experienceRef}
+            sectionsHeight={sectionsHeight}
+          />
           <Divider />
-          <ContactForm ref={contactRef} />
+          <ContactForm ref={contactRef} sectionsHeight={sectionsHeight} />
         </main>
       </div>
-      {!shouldRender && !headerInView && (
-        <footer className="flex items-center justify-center w-full fixed bottom-0 py-[10px]">
+      {!shouldRender && (
+        <footer className="flex items-center justify-center w-full py-[10px]">
           <Anchor
             className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
             href={socials[1] as string[]}

@@ -12,15 +12,18 @@ export interface ProjectProps {
 export default function Projects({
   items,
   ref,
+  sectionsHeight,
 }: {
   items: ProjectProps[];
   ref: (node?: Element | null) => void;
+  sectionsHeight: React.CSSProperties;
 }) {
   return (
     <section
       id="projects"
       ref={ref}
-      className="flex justify-center items-center h-screen font-medium flex-col gap-10"
+      className="flex justify-center items-center font-medium flex-col gap-10"
+      style={sectionsHeight}
     >
       {items.map(({ name, title, children, url }, index) => (
         <div

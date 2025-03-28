@@ -1,28 +1,29 @@
+import IsPortrait from "@/app/types/IsPortrait";
 import Anchor from "../../Anchor";
 import Ul from "./components/export";
 import HeaderProps from "./props";
 import getCurrentEntryId from "./utils/getCurrentEntryId";
 
 interface HeaderMobileProps extends HeaderProps {
-  containerWidth: number;
   ref: (node?: Element | null) => void;
   inView: boolean;
+  isPortrait: IsPortrait;
 }
 
 export default function Header({
   navChildrenArr,
   entryes,
   socials,
-  containerWidth,
   ref,
   inView,
+  isPortrait,
 }: HeaderMobileProps) {
   return (
     <header
       ref={ref}
       className="flex flex-col items-center justify-center w-full"
       style={{
-        height: `${containerWidth}px`,
+        height: isPortrait("50vh", "75vh"),
       }}
     >
       <div

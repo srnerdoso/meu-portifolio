@@ -7,12 +7,9 @@ export default function useShouldLigth(
   setShouldRender: Dispatch<SetStateAction<boolean>>
 ) {
   return useEffect(() => {
-    if (
-      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-      (containerWidth < 1024 && navigator.maxTouchPoints > 0)
-    ) {
-      setShouldRender(false);
-      return;
+    if (navigator.maxTouchPoints > 0) {
+      return setShouldRender(false);
     }
-  }, []);
+    return setShouldRender(true);
+  }, [containerWidth]);
 }
