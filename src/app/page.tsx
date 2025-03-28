@@ -134,7 +134,8 @@ export default function Home() {
             sectionsStyle={sectionsStyle()}
             styleMiddleSize={{
               flexDirection:
-                containerWidth < 1024 && containerWidth > 500
+                (containerWidth < 1024 && containerWidth > 500) ||
+                containerWidth > 1150
                   ? "row"
                   : "column",
             }}
