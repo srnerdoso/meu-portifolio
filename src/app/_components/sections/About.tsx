@@ -1,8 +1,18 @@
-export default function About({ items }: { items: React.ReactNode }) {
+export default function About({
+  items,
+  ref,
+  sectionsStyle,
+}: {
+  items: React.ReactNode;
+  ref: (node?: Element | null) => void;
+  sectionsStyle: React.CSSProperties;
+}) {
   return (
     <section
       id="about"
-      className="py-[30vh] flex justify-center items-center max-xl:py-[20vh]"
+      ref={ref}
+      className="flex justify-center items-center"
+      style={sectionsStyle}
     >
       {items}
     </section>

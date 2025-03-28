@@ -4,7 +4,7 @@ import Anchor from "./_components/Anchor";
 import Ligth from "./_components/Ligth";
 import Divider from "./_components/Divider";
 import Sections from "./_components/sections/Sections";
-import { useEffects, useRefs, useStates } from "./ts/hooks";
+import Effect from "./ts/Effect";
 import {
   navChildrenArr,
   experienceItems,
@@ -12,35 +12,67 @@ import {
   socials,
 } from "./_data/data";
 import ContactForm from "./_components/ContactForm";
-import Header from "./_components/layout/header/Header";
+import HeaderPC from "./_components/layout/header/HeaderPC";
 import About from "./_components/sections/About";
 import { aboutItems } from "./_data/sectionsData";
+import { useInView } from "react-intersection-observer";
+import HeaderMobile from "./_components/layout/header/HeaderMobile";
+import { useRef, useState } from "react";
 
 export default function Home() {
-  const { containerRef, mainRef, headerRef, ulRef, footerRef } = useRefs();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [isPC, setIsPC] = useState(true);
+  const [orientation, setOrientation] = useState<OrientationType>();
 
+  // Depois que terminar, mover todas as novas funções para um arquivo separado e exportar
+
+  const isPortrait = (whenTrue: string, whenFalse: string) => {
+    return orientation === "portrait-primary" ? whenTrue : whenFalse;
+  };
+
+  const sectionsStyle = () => {
+    const setSectionsStyle = (styleValue: string | number) => {
+      return isPC ? styleValue : isPortrait("50vh", "20%");
+    };
+    const paddingY = setSectionsStyle(0);
+
+    return {
+      height: setSectionsStyle("100vh"),
+      paddingTop: paddingY,
+      paddingBottom: paddingY,
+    } as React.CSSProperties;
+  };
+
+  Effect.useDevice(containerWidth, setIsPC);
+  Effect.useBodyScrollLock(containerRef);
+  Effect.useUpdateStates(containerRef, setContainerWidth, setOrientation);
+
+  // OBSERVERS
   const {
-    currentSection,
-    setCurrentSection,
-    headerVisible,
-    setHeaderVisible,
-    containerWidth,
-    setContainerWidth,
-    shouldRender,
-    setShouldRender,
-  } = useStates();
+    ref: headerRef,
+    inView: headerInView,
+    entry: headerEntry,
+  } = useInView({
+    threshold: 0.05,
+  });
+  const { ref: aboutRef, entry: aboutEntry } = useInView({ threshold: 0.1 });
+  const { ref: projectsRef, entry: projectsEntry } = useInView({
+    threshold: 0.1,
+  });
+  const { ref: experienceRef, entry: experienceEntry } = useInView({
+    threshold: 0.1,
+  });
+  const { ref: contactRef, entry: contactEntry } = useInView({
+    threshold: 0.1,
+  });
 
-  useEffects.useVisibilityEffect(
-    containerRef,
-    setContainerWidth,
-    mainRef,
-    setCurrentSection,
-    currentSection,
-    ulRef
-  );
-  useEffects.useHeaderVisibleEffect(headerRef, setHeaderVisible, headerVisible);
-  useEffects.useShouldLigth(containerWidth, setShouldRender);
-  useEffects.useBodyScrollLock(containerRef);
+  const obsverEntryes = [
+    aboutEntry,
+    projectsEntry,
+    experienceEntry,
+    contactEntry,
+  ];
 
   return (
     <div ref={containerRef} className="m-0 p-0">
@@ -52,58 +84,90 @@ export default function Home() {
         </div>
       )}
 
-      {shouldRender && (
-        <Ligth
-          containerRef={containerRef}
-          headerRef={headerRef}
-          containerWidth={containerWidth}
-        />
-      )}
+      {isPC && <Ligth containerRef={containerRef} />}
 
       <div
         id="layout"
-        className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
+        className="relative flex flex-row max-w-7xl m-auto"
+        style={{
+          maxWidth: isPC ? "1280px" : "100%",
+          flexDirection: isPC ? "row" : "column",
+        }}
       >
-        <Header
-          headerRef={headerRef}
-          containerWidth={containerWidth}
-          navChildrenArr={navChildrenArr}
-          ulRef={ulRef}
-          currentSection={currentSection}
-        />
-        <div
-          id="line"
-          className="sticky top-0 flex justify-center items-center h-screen max-xl:hidden"
-        >
-          <hr className="w-[1px] h-[80vh] bg-white border-none" />
-        </div>
-        <main
-          ref={mainRef}
-          className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10"
-        >
-          <About items={aboutItems} />
+        {isPC ? (
+          <HeaderPC
+            entryes={obsverEntryes}
+            navChildrenArr={navChildrenArr}
+            socials={socials}
+            ref={headerRef}
+          />
+        ) : (
+          <HeaderMobile
+            entryes={[...obsverEntryes, headerEntry]}
+            navChildrenArr={navChildrenArr}
+            socials={socials}
+            ref={headerRef}
+            inView={headerInView}
+            isPortrait={isPortrait}
+          />
+        )}
+
+        {isPC && (
+          <div
+            id="line"
+            className="sticky top-0 flex justify-center items-center h-screen"
+          >
+            <hr className="w-[1px] h-[80vh] bg-white border-none" />
+          </div>
+        )}
+
+        <main className="flex flex-col px-[93px] text-justify text-[16px] max-xl:px-10">
+          <About
+            items={aboutItems}
+            ref={aboutRef}
+            sectionsStyle={sectionsStyle()}
+          />
           <Divider />
-          <Sections.Projects items={projectsItems} />
+          <Sections.Projects
+            items={projectsItems}
+            ref={projectsRef}
+            sectionsStyle={sectionsStyle()}
+            styleMiddleSize={{
+              flexDirection:
+                containerWidth < 1024 && containerWidth > 500
+                  ? "row"
+                  : "column",
+            }}
+          />
           <Divider />
-          <Sections.Experience items={experienceItems} />
+          <Sections.Experience
+            items={experienceItems}
+            ref={experienceRef}
+            sectionsStyle={sectionsStyle()}
+            styleMiddleSize={{
+              flexDirection:
+                containerWidth < 1024 && containerWidth > 860
+                  ? "row"
+                  : "column",
+              gap:
+                containerWidth < 1024 && containerWidth > 860 ? undefined : 0,
+            }}
+          />
           <Divider />
-          <ContactForm />
+          <ContactForm ref={contactRef} sectionsStyle={sectionsStyle()} />
         </main>
       </div>
-      <footer
-        ref={footerRef}
-        className={`hidden max-xl:${
-          headerVisible ? "hidden" : "flex"
-        } items-center justify-center h-10 w-full sticky bottom-0`}
-      >
-        <Anchor
-          className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
-          href={socials[1] as string[]}
-          type="footer"
-        >
-          {socials[0]}
-        </Anchor>
-      </footer>
+      {!isPC && (
+        <footer className="flex items-center justify-center w-full py-[10px]">
+          <Anchor
+            className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
+            href={socials[1] as string[]}
+            type="other"
+          >
+            {socials[0]}
+          </Anchor>
+        </footer>
+      )}
     </div>
   );
 }

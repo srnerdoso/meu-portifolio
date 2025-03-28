@@ -9,16 +9,29 @@ export interface ProjectProps {
   url: string;
 }
 
-export default function Projects({ items }: { items: ProjectProps[] }) {
+export default function Projects({
+  items,
+  ref,
+  sectionsStyle,
+  styleMiddleSize,
+}: {
+  items: ProjectProps[];
+  ref: (node?: Element | null) => void;
+  sectionsStyle: React.CSSProperties;
+  styleMiddleSize: React.CSSProperties;
+}) {
   return (
     <section
       id="projects"
-      className="flex justify-center items-center py-[30vh] font-medium flex-col gap-10"
+      ref={ref}
+      className="flex justify-center items-center font-medium flex-col gap-10"
+      style={sectionsStyle}
     >
       {items.map(({ name, title, children, url }, index) => (
         <div
           id={`project-${name}`}
           className="flex flex-row gap-7 max-xl:flex-col"
+          style={styleMiddleSize}
           key={`project-${index}`}
         >
           <ProjectLinkComponent projectUrl={url}>
