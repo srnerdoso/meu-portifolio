@@ -1,9 +1,9 @@
-import useShouldLigth from "./useShouldLigth";
+import useDevice from "./useDevice";
 import { useBodyScrollLock } from "./useBodyScrollLock";
 import useUpdateStates from "./useUpdateStates";
 
 const useEffects = {
-  useShouldLigth,
+  useDevice,
   useBodyScrollLock,
   useUpdateStates,
 };

@@ -27,8 +27,6 @@ export default function Home() {
 
   // Depois que terminar, mover todas as novas funções para um arquivo separado e exportar
 
-  console.log(orientation);
-
   const isPortrait = (whenTrue: string, whenFalse: string) => {
     return orientation === "portrait-primary" ? whenTrue : whenFalse;
   };
@@ -46,7 +44,7 @@ export default function Home() {
     } as React.CSSProperties;
   };
 
-  Effect.useShouldLigth(containerWidth, setIsPC);
+  Effect.useDevice(containerWidth, setIsPC);
   Effect.useBodyScrollLock(containerRef);
   Effect.useUpdateStates(containerRef, setContainerWidth, setOrientation);
 
@@ -90,9 +88,13 @@ export default function Home() {
 
       <div
         id="layout"
-        className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
+        className="relative flex flex-row max-w-7xl m-auto"
+        style={{
+          maxWidth: isPC ? "1280px" : "100%",
+          flexDirection: isPC ? "row" : "column",
+        }}
       >
-        {containerWidth > 1280 ? (
+        {isPC ? (
           <HeaderPC
             entryes={obsverEntryes}
             navChildrenArr={navChildrenArr}
