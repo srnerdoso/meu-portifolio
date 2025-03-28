@@ -132,12 +132,26 @@ export default function Home() {
             items={projectsItems}
             ref={projectsRef}
             sectionsStyle={sectionsStyle()}
+            styleMiddleSize={{
+              flexDirection:
+                containerWidth < 1024 && containerWidth > 500
+                  ? "row"
+                  : "column",
+            }}
           />
           <Divider />
           <Sections.Experience
             items={experienceItems}
             ref={experienceRef}
             sectionsStyle={sectionsStyle()}
+            styleMiddleSize={{
+              flexDirection:
+                containerWidth < 1024 && containerWidth > 860
+                  ? "row"
+                  : "column",
+              gap:
+                containerWidth < 1024 && containerWidth > 860 ? undefined : 0,
+            }}
           />
           <Divider />
           <ContactForm ref={contactRef} sectionsStyle={sectionsStyle()} />

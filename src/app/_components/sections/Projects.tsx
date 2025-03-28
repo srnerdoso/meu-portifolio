@@ -13,10 +13,12 @@ export default function Projects({
   items,
   ref,
   sectionsStyle,
+  styleMiddleSize,
 }: {
   items: ProjectProps[];
   ref: (node?: Element | null) => void;
   sectionsStyle: React.CSSProperties;
+  styleMiddleSize: React.CSSProperties;
 }) {
   return (
     <section
@@ -29,6 +31,7 @@ export default function Projects({
         <div
           id={`project-${name}`}
           className="flex flex-row gap-7 max-xl:flex-col"
+          style={styleMiddleSize}
           key={`project-${index}`}
         >
           <ProjectLinkComponent projectUrl={url}>
