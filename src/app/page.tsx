@@ -48,7 +48,12 @@ export default function Home() {
   Effect.useBodyScrollLock(containerRef);
   Effect.useUpdateStates(containerRef, setContainerWidth, setOrientation);
 
-  const { ref: headerRef, inView: headerInView } = useInView({
+  // OBSERVERS
+  const {
+    ref: headerRef,
+    inView: headerInView,
+    entry: headerEntry,
+  } = useInView({
     threshold: 0.05,
   });
   const { ref: aboutRef, entry: aboutEntry } = useInView({ threshold: 0.1 });
@@ -93,7 +98,7 @@ export default function Home() {
           />
         ) : (
           <HeaderMobile
-            entryes={obsverEntryes}
+            entryes={[...obsverEntryes, headerEntry]}
             navChildrenArr={navChildrenArr}
             socials={socials}
             ref={headerRef}

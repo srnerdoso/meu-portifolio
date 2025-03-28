@@ -9,22 +9,40 @@ const getCurrentEntryId = (
   const experienceRatio = Number(experience.intersectionRatio.toFixed(3));
   const contactRatio = Number(contact.intersectionRatio.toFixed(3));
 
+  const isGreaterThan = (
+    bigger: number,
+    smallers: [number, number, number]
+  ) => {
+    const isTrues: boolean[] = [];
+    smallers.forEach((smaller) => isTrues.push(bigger > smaller));
+
+    return isTrues[0] && isTrues[1] && isTrues[2] ? true : false;
+  };
+
   switch (true) {
-    case aboutRatio > projectsRatio &&
-      aboutRatio > experienceRatio &&
-      aboutRatio > contactRatio:
+    case isGreaterThan(aboutRatio, [
+      projectsRatio,
+      experienceRatio,
+      contactRatio,
+    ]):
       return about.target.id;
-    case projectsRatio > aboutRatio &&
-      projectsRatio > experienceRatio &&
-      projectsRatio > contactRatio:
+    case isGreaterThan(projectsRatio, [
+      aboutRatio,
+      experienceRatio,
+      contactRatio,
+    ]):
       return projects.target.id;
-    case experienceRatio > aboutRatio &&
-      experienceRatio > projectsRatio &&
-      experienceRatio > contactRatio:
+    case isGreaterThan(experienceRatio, [
+      aboutRatio,
+      projectsRatio,
+      contactRatio,
+    ]):
       return experience.target.id;
-    case contactRatio > aboutRatio &&
-      contactRatio > projectsRatio &&
-      contactRatio > experienceRatio:
+    case isGreaterThan(contactRatio, [
+      aboutRatio,
+      projectsRatio,
+      experienceRatio,
+    ]):
       return contact.target.id;
     default:
       return "";
