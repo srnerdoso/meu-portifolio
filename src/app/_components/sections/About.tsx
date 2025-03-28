@@ -1,5 +1,3 @@
-import IsPortrait from "@/app/types/IsPortrait";
-
 export default function About({
   items,
   ref,
