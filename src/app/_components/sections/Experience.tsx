@@ -6,18 +6,18 @@ export interface ExperienceItem {
 export default function Experience({
   items,
   ref,
-  sectionsHeight,
+  sectionsStyle,
 }: {
   items: ExperienceItem[];
   ref: (node?: Element | null) => void;
-  sectionsHeight: React.CSSProperties;
+  sectionsStyle: React.CSSProperties;
 }) {
   return (
     <section
       id="experience"
       ref={ref}
       className="flex flex-col justify-center items-center gap-40"
-      style={sectionsHeight}
+      style={sectionsStyle}
     >
       {items.map((item, index) => (
         <div key={`experience-${index}`}>

@@ -9,10 +9,10 @@ import Error from "./Error";
 
 export default function ContactForm({
   ref,
-  sectionsHeight,
+  sectionsStyle,
 }: {
   ref: (node?: Element | null) => void;
-  sectionsHeight: React.CSSProperties;
+  sectionsStyle: React.CSSProperties;
 }) {
   const [btnValue, setBtnValue] = useState<
     "Enviar" | "Enviando..." | "Enviado!" | "Erro"
@@ -46,7 +46,7 @@ export default function ContactForm({
       id="contact-me"
       ref={ref}
       className="relative flex flex-col justify-center items-start gap-5 text-[16px] py-[53px]"
-      style={sectionsHeight}
+      style={sectionsStyle}
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2 className="uppercase font-medium">Contato</h2>

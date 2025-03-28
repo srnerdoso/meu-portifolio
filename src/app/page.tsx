@@ -25,14 +25,23 @@ export default function Home() {
   const [shouldRender, setShouldRender] = useState(true);
   const [orientation, setOrientation] = useState<OrientationType>();
 
+  // Depois que terminar, mover todas as novas funções para um arquivo separado e exportar
+
   const isPortrait = (whenTrue: string, whenFalse: string) => {
     return orientation === "portrait-primary" ? whenTrue : whenFalse;
   };
 
-  const sectionsHeight: React.CSSProperties = {
-    height: isPortrait("100vh", ""),
-    paddingTop: isPortrait("", "20vh"),
-    paddingBottom: isPortrait("", "20vh"),
+  const sectionsStyle = () => {
+    const setSectionsStyle = (styleValue: string | number) => {
+      return shouldRender ? styleValue : isPortrait("100vh", "");
+    };
+    const paddingY = setSectionsStyle(0);
+
+    return {
+      height: setSectionsStyle("100vh"),
+      paddingTop: paddingY,
+      paddingBottom: paddingY,
+    } as React.CSSProperties;
   };
 
   Effect.useShouldLigth(containerWidth, setShouldRender);
@@ -74,7 +83,7 @@ export default function Home() {
 
       <div
         id="layout"
-        className="flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
+        className="relative flex flex-row max-w-7xl m-auto max-xl:flex-col max-xl:w-full"
       >
         {containerWidth > 1280 ? (
           <HeaderPC
@@ -106,22 +115,22 @@ export default function Home() {
           <About
             items={aboutItems}
             ref={aboutRef}
-            sectionsHeight={sectionsHeight}
+            sectionsStyle={sectionsStyle()}
           />
           <Divider />
           <Sections.Projects
             items={projectsItems}
             ref={projectsRef}
-            sectionsHeight={sectionsHeight}
+            sectionsStyle={sectionsStyle()}
           />
           <Divider />
           <Sections.Experience
             items={experienceItems}
             ref={experienceRef}
-            sectionsHeight={sectionsHeight}
+            sectionsStyle={sectionsStyle()}
           />
           <Divider />
-          <ContactForm ref={contactRef} sectionsHeight={sectionsHeight} />
+          <ContactForm ref={contactRef} sectionsStyle={sectionsStyle()} />
         </main>
       </div>
       {!shouldRender && (
