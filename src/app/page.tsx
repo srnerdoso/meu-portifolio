@@ -95,6 +95,7 @@ export default function Home() {
             entryes={obsverEntryes}
             navChildrenArr={navChildrenArr}
             socials={socials}
+            ref={headerRef}
           />
         ) : (
           <HeaderMobile

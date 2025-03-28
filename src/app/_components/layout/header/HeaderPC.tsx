@@ -3,14 +3,19 @@ import Ul from "./components/export";
 import HeaderProps from "./props";
 import getCurrentEntryId from "./utils/getCurrentEntryId";
 
-export default function Header({
+export default function HeaderPC({
   entryes,
   navChildrenArr,
   socials,
+  ref,
 }: HeaderProps) {
   return (
     <div id="header-container" className="sticky top-0 flex">
-      <header className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start">
+      <header
+        ref={ref}
+        id="header-pc"
+        className="sticky top-0 max-w-[537px] h-screen px-[110px] py-[70px] flex flex-col justify-between items-start"
+      >
         <div
           id="title"
           className="flex flex-col justify-end items-center max-w-[317px]"

@@ -5,7 +5,6 @@ import HeaderProps from "./props";
 import getCurrentEntryId from "./utils/getCurrentEntryId";
 
 interface HeaderMobileProps extends HeaderProps {
-  ref: (node?: Element | null) => void;
   inView: boolean;
   isPortrait: IsPortrait;
 }
@@ -20,6 +19,7 @@ export default function Header({
 }: HeaderMobileProps) {
   return (
     <header
+      id="header-mobile"
       ref={ref}
       className="flex flex-col items-center justify-center w-full"
       style={{
