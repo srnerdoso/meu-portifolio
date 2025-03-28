@@ -22,7 +22,6 @@ import { useRef, useState } from "react";
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
   const [shouldRender, setShouldRender] = useState(true);
   const [orientation, setOrientation] = useState<OrientationType>();
 
@@ -38,12 +37,7 @@ export default function Home() {
 
   Effect.useShouldLigth(containerWidth, setShouldRender);
   Effect.useBodyScrollLock(containerRef);
-  Effect.useUpdateStates(
-    containerRef,
-    setContainerWidth,
-    setContainerHeight,
-    setOrientation
-  );
+  Effect.useUpdateStates(containerRef, setContainerWidth, setOrientation);
 
   const { ref: headerRef, inView: headerInView } = useInView({
     threshold: 0.05,
