@@ -13,7 +13,7 @@ export default function About({
     <section
       id="about"
       ref={ref}
-      className="flex justify-center items-center max-xl:py-[20vh]"
+      className="flex justify-center items-center"
       style={sectionsStyle}
     >
       {items}

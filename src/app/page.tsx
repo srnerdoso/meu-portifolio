@@ -22,10 +22,12 @@ import { useRef, useState } from "react";
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
-  const [shouldRender, setShouldRender] = useState(true);
+  const [isPC, setIsPC] = useState(true);
   const [orientation, setOrientation] = useState<OrientationType>();
 
   // Depois que terminar, mover todas as novas funções para um arquivo separado e exportar
+
+  console.log(orientation);
 
   const isPortrait = (whenTrue: string, whenFalse: string) => {
     return orientation === "portrait-primary" ? whenTrue : whenFalse;
@@ -33,7 +35,7 @@ export default function Home() {
 
   const sectionsStyle = () => {
     const setSectionsStyle = (styleValue: string | number) => {
-      return shouldRender ? styleValue : isPortrait("100vh", "");
+      return isPC ? styleValue : isPortrait("50vh", "20%");
     };
     const paddingY = setSectionsStyle(0);
 
@@ -44,7 +46,7 @@ export default function Home() {
     } as React.CSSProperties;
   };
 
-  Effect.useShouldLigth(containerWidth, setShouldRender);
+  Effect.useShouldLigth(containerWidth, setIsPC);
   Effect.useBodyScrollLock(containerRef);
   Effect.useUpdateStates(containerRef, setContainerWidth, setOrientation);
 
@@ -84,7 +86,7 @@ export default function Home() {
         </div>
       )}
 
-      {shouldRender && <Ligth containerRef={containerRef} />}
+      {isPC && <Ligth containerRef={containerRef} />}
 
       <div
         id="layout"
@@ -108,7 +110,7 @@ export default function Home() {
           />
         )}
 
-        {shouldRender && (
+        {isPC && (
           <div
             id="line"
             className="sticky top-0 flex justify-center items-center h-screen"
@@ -139,7 +141,7 @@ export default function Home() {
           <ContactForm ref={contactRef} sectionsStyle={sectionsStyle()} />
         </main>
       </div>
-      {!shouldRender && (
+      {!isPC && (
         <footer className="flex items-center justify-center w-full py-[10px]">
           <Anchor
             className="text-[33px] text-white opacity-50 transition hover:opacity-100 ease-in-out duration-75"
